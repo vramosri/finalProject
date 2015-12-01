@@ -24,6 +24,7 @@ public class initialTests {
 		//Initializes player, a question, and a fraction for testing purposes.
 		testFraction = new Fraction(1, 2);
 		testQuestion1 = new MatchingQuestion();
+		testQuestion1.setCorrectAnswer(testFraction);
 		testQuestion2 = new AdditionQuestion();
 		testQuestion3 = new EqualityQuestion();
 		testPlayer = new Player();
@@ -51,21 +52,23 @@ public class initialTests {
 	@Test
 	public void testGiveCoins(){
 		//Tests that player receives the correct amount of coins given the question.
+		testQuestion1.setCoins(10);
 		testPlayer.setCoins(0);
 		testPlayer.addCoins(testQuestion1.getCoins());
-		assertTrue(testPlayer.getCoins() == 10);
+		assertEquals(testPlayer.getCoins(), 10);
 		testPlayer.setCoins(0);
 		testPlayer.addCoins(testQuestion2.getCoins());
-		assertTrue(testPlayer.getCoins() == 30);
+		assertEquals(testPlayer.getCoins(), 30);
 		testPlayer.setCoins(0);
 		testPlayer.addCoins(testQuestion3.getCoins());
-		assertTrue(testPlayer.getCoins() == 20);
+		assertEquals(testPlayer.getCoins(), 20);
 	}
 	
 	@Test
 	public void testReduceCoins(){
 		//Tests that question rewards half coins for one wrong answer, and no coins for two wrong answers.
 		int coins = testQuestion1.getCoinValue();
+		testQuestion1.setCoins(10);
 		testQuestion1.reduceCoins();
 		assertEquals(testQuestion1.getCoins(), (coins / 2));
 		testQuestion1.reduceCoins();
@@ -85,7 +88,7 @@ public class initialTests {
 	public void testProgressBar(){
 		//Tests that the progress bar correctly keeps track of player's progress.
 		assertEquals(testBar.getProgress(), 0);
-		testGame.changeScene();
+		testGame.changeScene(testBar);
 		assertEquals(testBar.getProgress(), 1);
 	}
 

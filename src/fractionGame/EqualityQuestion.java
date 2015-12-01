@@ -4,7 +4,8 @@ public class EqualityQuestion extends Question {
 
 	
 	public EqualityQuestion(){
-		
+		this.coinValue = 20;
+		this.coins = this.coinValue;
 	}
 	
 	public String generateQuestion() {

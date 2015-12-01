@@ -5,7 +5,7 @@ public class GameGUI {
 		
 	}
 	
-	public void changeScene(){
-		
+	public void changeScene(ProgressBar progress){
+		progress.setProgress(progress.getProgress() + 1);
 	}
 }

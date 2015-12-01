@@ -1,10 +1,10 @@
 package fractionGame;
 
 public class MatchingQuestion extends Question {
-
 	
 	public MatchingQuestion(){
-		
+		this.coinValue = 10;
+		this.coins = this.coinValue;
 	}
 	
 	public String generateQuestion() {
@@ -19,11 +19,16 @@ public class MatchingQuestion extends Question {
 	@Override
 	public boolean checkAnswer(Fraction fraction) {
 		// TODO Auto-generated method stub
-		return false;
+		if(correctAnswer.checkEquals(fraction))
+			return true;
+		else{
+			this.reduceCoins();
+			return false;
+		}
 	}
 	
 	public int getCoinValue(){
-		return 0;
+		return coinValue;
 	}
 	
 }

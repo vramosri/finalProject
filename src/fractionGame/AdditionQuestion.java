@@ -4,7 +4,8 @@ public class AdditionQuestion extends Question {
 
 	
 	public AdditionQuestion(){
-		
+		this.coinValue = 30;
+		this.coins = this.coinValue;
 	}
 	
 	public String generateQuestion() {
@@ -19,7 +20,10 @@ public class AdditionQuestion extends Question {
 	@Override
 	public boolean checkAnswer(Fraction fraction) {
 		// TODO Auto-generated method stub
-		return false;
+		if(correctAnswer.checkEquals(fraction))
+			return true;
+		else
+			return false;
 	}
 	
 	public int getCoinValue(){

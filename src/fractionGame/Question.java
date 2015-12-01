@@ -6,13 +6,15 @@ public abstract class Question {
 	
 	private ArrayList<Fraction> answers = null; 
 	private String question; 
-	private Fraction correctAnswer; 
-	private int coins;
+	protected Fraction correctAnswer; 
+	protected int coinValue;
+	protected int coins;
 	
 	public abstract boolean checkAnswer(Fraction fraction);
 	
 	public void reduceCoins(){
-		
+		if(coins > 0)
+			coins = coins - (coinValue / 2);
 	}
 	
 	public Fraction getCorrectAnswer() {
@@ -20,7 +22,7 @@ public abstract class Question {
 	}
 
 	public void setCorrectAnswer(Fraction correctAnswer) {
-		correctAnswer = correctAnswer;
+		this.correctAnswer = correctAnswer;
 	}
 
 	public void draw() {
