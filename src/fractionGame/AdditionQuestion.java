@@ -4,7 +4,7 @@ public class AdditionQuestion extends Question {
 
 	
 	public AdditionQuestion(){
-		this.coinValue = 30;
+		this.coinValue = 20;
 		this.coins = this.coinValue;
 	}
 	

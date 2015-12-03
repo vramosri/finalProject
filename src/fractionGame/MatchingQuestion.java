@@ -15,18 +15,26 @@ public class MatchingQuestion extends Question {
 		int denominator = 0;
 		Random r = new Random();
 		switch(difficulty){
-		case 1: while(denominator == 0){
-			denominator = r.nextInt(difficulty * 4) % 2;
-		}
-		numerator = r.nextInt(difficulty * 4) % 2;
-		case 2: while(denominator == 0){
-			denominator = r.nextInt(difficulty * 4) % 2;
-		}
-		numerator = r.nextInt(difficulty * 4) % 2;
-		case 3: while(denominator == 0){
-			denominator = r.nextInt(difficulty * 4) + 1;
-		}
-		numerator = r.nextInt(difficulty * 4) % 2;
+		case 1:
+			while (denominator == 0) {
+				denominator = r.nextInt(difficulty * 4) % 2;
+			}
+			numerator = r.nextInt(difficulty * 4) % 2;
+		case 2:
+			while (denominator == 0) {
+				denominator = r.nextInt(difficulty * 4) + 1;
+			}
+			numerator = r.nextInt(difficulty * 4);
+		case 3:
+			while (denominator == 0) {
+				denominator = r.nextInt(difficulty * 4) % 2;
+			}
+			numerator = r.nextInt(difficulty * 4) % 2;
+		case 4:
+			while (denominator == 0) {
+				denominator = r.nextInt(difficulty * 4) + 1;
+			}
+			numerator = r.nextInt(difficulty * 4);
 		}
 		return new Fraction(numerator, denominator); 
 	}

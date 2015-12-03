@@ -13,7 +13,7 @@ public class initialTests {
 	private Fraction testFraction;
 	private MatchingQuestion testQuestion1;
 	private AdditionQuestion testQuestion2;
-	private EqualityQuestion testQuestion3;
+	private MultiplicationQuestion testQuestion3;
 	private Player testPlayer;
 	private GameGUI testGame;
 	private ProgressBar testBar;
@@ -26,7 +26,7 @@ public class initialTests {
 		testQuestion1 = new MatchingQuestion();
 		testQuestion1.setCorrectAnswer(testFraction);
 		testQuestion2 = new AdditionQuestion();
-		testQuestion3 = new EqualityQuestion();
+		testQuestion3 = new MultiplicationQuestion();
 		testPlayer = new Player();
 		testGame = new GameGUI();
 		testBar = new ProgressBar();
