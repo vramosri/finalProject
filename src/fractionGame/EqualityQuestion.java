@@ -8,9 +8,9 @@ public class EqualityQuestion extends Question {
 		this.coins = this.coinValue;
 	}
 	
-	public String generateQuestion() {
+	public Fraction generateQuestion(int difficulty) {
 		// TODO: Make sure that the denominator is not 0 when generating random fraction
-		return ""; 
+		return null; 
 	}
 	public Fraction generateAnswer() {
 		Fraction fra = new Fraction(1,2); 
@@ -19,12 +19,12 @@ public class EqualityQuestion extends Question {
 
 	@Override
 	public boolean checkAnswer(Fraction fraction) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 	
 	public int getCoinValue(){
-		return 0;
+		return coinValue;
 	}
 	
 }
