@@ -58,10 +58,10 @@ public class initialTests {
 		assertEquals(testPlayer.getCoins(), 10);
 		testPlayer.setCoins(0);
 		testPlayer.addCoins(testQuestion2.getCoins());
-		assertEquals(testPlayer.getCoins(), 30);
+		assertEquals(testPlayer.getCoins(), 20);
 		testPlayer.setCoins(0);
 		testPlayer.addCoins(testQuestion3.getCoins());
-		assertEquals(testPlayer.getCoins(), 20);
+		assertEquals(testPlayer.getCoins(), 30);
 	}
 	
 	@Test
@@ -113,13 +113,48 @@ public class initialTests {
 			assertTrue(f.getNumerator() <= f.getDenominator());
 		}
 	}
+	
+	@Test
+	public void testMatchingAnswerGeneration(){
+		//Tests that matching questions generate correct answers.
+		for(int i = 0; i < 100; i++){
+			testQuestion1.generateQuestion(1);
+			testQuestion1.generateAnswer(1);
+			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
+			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+		}
+		for(int i = 0; i < 100; i++){
+			testQuestion1.generateQuestion(2);
+			testQuestion1.generateAnswer(2);
+			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
+			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+		}
+		for(int i = 0; i < 100; i++){
+			testQuestion1.generateQuestion(3);
+			testQuestion1.generateAnswer(3);
+			System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
+			System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+		}
+		for(int i = 0; i < 100; i++){
+			testQuestion1.generateQuestion(4);
+			testQuestion1.generateAnswer(4);
+			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
+			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+		}
+	}
 
 	@Test
 	public void testGenerateOption() {
 		//Tests that equal fractions are equal
-		testFraction = new Fraction(3, 12);
-		for(int i = 0; i< 100; i++){
-		assertFalse(testQuestion1.generateOption(testFraction).checkEquals(new Fraction(3,12)));
+		//testFraction = new Fraction(3, 12);
+		for(int i = 0; i< 10000; i++){
+			testQuestion1.generateQuestion(4);
+			testQuestion1.generateAnswer(4);
+			assertFalse(testQuestion1.generateOption(4).checkEquals(testQuestion1.getCorrectAnswer()));
 		}
 	}	
 }
