@@ -16,29 +16,42 @@ public class MatchingQuestion extends Question {
 		Random r = new Random();
 		switch(difficulty){
 		case 1:
-			while (denominator == 0) {
-				denominator = r.nextInt(difficulty * 4) % 2;
+			while ((denominator == 0) || (denominator % 2 == 1)) {
+				denominator = r.nextInt(difficulty * 4 + 1);
 			}
-			numerator = r.nextInt(difficulty * 4) % 2;
+			while ((numerator == 0) || (numerator > denominator)) {
+				numerator = r.nextInt(difficulty * 4) + 1;
+			}
+			break;
 		case 2:
-			while (denominator == 0) {
-				denominator = r.nextInt(difficulty * 4) + 1;
+			while ((denominator == 0) || (denominator < 4)) {
+				denominator = r.nextInt(difficulty * 4 + 1);
 			}
-			numerator = r.nextInt(difficulty * 4);
+			while ((numerator == 0) || (numerator > denominator)) {
+				numerator = r.nextInt(difficulty * 4);
+			}
+			break;
 		case 3:
-			while (denominator == 0) {
-				denominator = r.nextInt(difficulty * 4) % 2;
-			}
-			numerator = r.nextInt(difficulty * 4) % 2;
-		case 4:
-			while (denominator == 0) {
+			while ((denominator == 0) || (denominator % 2 == 1) || (denominator < 8)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
-			numerator = r.nextInt(difficulty * 4);
+			while ((numerator == 0) || (numerator > denominator)) {
+				numerator = r.nextInt(difficulty * 4) + 1;
+			}
+			break;
+		case 4:
+			while ((denominator == 0) || (denominator < 10)) {
+				denominator = r.nextInt(difficulty * 4) + 1;
+			}
+			while ((numerator == 0) || (numerator > denominator)) {
+				numerator = r.nextInt(difficulty * 4);
+			}
+			break;
 		}
 		return new Fraction(numerator, denominator); 
 	}
-	public Fraction generateAnswer() {
+	
+	public Fraction generateAnswer(int difficulty) {
 		Fraction fra = new Fraction(1,2); 
 		return fra; 
 	}

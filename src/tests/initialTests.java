@@ -91,5 +91,27 @@ public class initialTests {
 		testGame.changeScene(testBar);
 		assertEquals(testBar.getProgress(), 1);
 	}
+	
+	@Test
+	public void testMatchingQuestionGeneration(){
+		//Tests that random matching questions are generated correctly.
+		Fraction f = new Fraction(1, 1);
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(1);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(2);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(3);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(4);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+	}
 
 }
