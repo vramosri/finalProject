@@ -1,6 +1,7 @@
 package fractionGame;
 
 public class GameGUI {
+	
 	public GameGUI(){
 		
 	}

@@ -4,13 +4,13 @@ public class AdditionQuestion extends Question {
 
 	
 	public AdditionQuestion(){
-		this.coinValue = 30;
+		this.coinValue = 20;
 		this.coins = this.coinValue;
 	}
 	
-	public String generateQuestion() {
+	public Fraction generateQuestion(int difficulty) {
 		// TODO: Make sure that the denominator is not 0 when generating random fraction
-		return ""; 
+		return null; 
 	}
 	public Fraction generateAnswer() {
 		Fraction fra = new Fraction(1,2); 
@@ -27,7 +27,7 @@ public class AdditionQuestion extends Question {
 	}
 	
 	public int getCoinValue(){
-		return 0;
+		return coinValue;
 	}
 	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Question {
 	
-	private ArrayList<Fraction> answers = null; 
+	private ArrayList<Fraction> answers;
 	private String question; 
 	protected Fraction correctAnswer; 
 	protected int coinValue;
