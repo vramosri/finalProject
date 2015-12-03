@@ -13,7 +13,7 @@ public class initialTests {
 	private Fraction testFraction;
 	private MatchingQuestion testQuestion1;
 	private AdditionQuestion testQuestion2;
-	private EqualityQuestion testQuestion3;
+	private MultiplicationQuestion testQuestion3;
 	private Player testPlayer;
 	private GameGUI testGame;
 	private ProgressBar testBar;
@@ -26,7 +26,7 @@ public class initialTests {
 		testQuestion1 = new MatchingQuestion();
 		testQuestion1.setCorrectAnswer(testFraction);
 		testQuestion2 = new AdditionQuestion();
-		testQuestion3 = new EqualityQuestion();
+		testQuestion3 = new MultiplicationQuestion();
 		testPlayer = new Player();
 		testGame = new GameGUI();
 		testBar = new ProgressBar();
@@ -91,5 +91,35 @@ public class initialTests {
 		testGame.changeScene(testPlayer);
 		assertEquals(testBar.getProgress(), 1);
 	}
+	
+	@Test
+	public void testMatchingQuestionGeneration(){
+		//Tests that random matching questions are generated correctly.
+		Fraction f = new Fraction(1, 1);
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(1);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(2);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(3);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+		for(int i = 0; i < 100; i++){
+			f = testQuestion1.generateQuestion(4);
+			assertTrue(f.getNumerator() <= f.getDenominator());
+		}
+	}
 
+	@Test
+	public void testGenerateOption() {
+		//Tests that equal fractions are equal
+		testFraction = new Fraction(3, 12);
+		for(int i = 0; i< 100; i++){
+		assertFalse(testQuestion1.generateOption(testFraction).checkEquals(new Fraction(3,12)));
+		}
+	}	
 }
