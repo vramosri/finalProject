@@ -88,7 +88,7 @@ public class initialTests {
 	public void testProgressBar(){
 		//Tests that the progress bar correctly keeps track of player's progress.
 		assertEquals(testBar.getProgress(), 0);
-		testGame.changeScene(testBar);
+		testGame.changeScene(testPlayer);
 		assertEquals(testBar.getProgress(), 1);
 	}
 	
