@@ -7,6 +7,8 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -38,14 +40,14 @@ public class GameGUI extends JPanel{
 		test1 = new Scene("/graphics/Backgrounds/Beach.png", "Test", 1, "/graphics/Characters/Mermaid.png", 1);
 		test2 = new Scene("/graphics/Backgrounds/Cave.png", "Test", 2, "/graphics/Characters/Dwarf.png", 1);
 		
-		JButton button = new JButton();
-		add(button);
-		button.addActionListener(new ChangeSceneListener());
+		//JButton button = new JButton();
+		//add(button);
+		//button.addActionListener(new ChangeSceneListener());
 		myImage = new ImageIcon(getImage("/graphics/System/Button.png"));
 		
-		Image original = myImage.getImage();
-		button.setIcon(myImage);
-		
+	//	Image original = myImage.getImage();
+	//	button.setIcon(myImage);
+		this.addMouseListener(new ChangeSceneListener());
 		
 		tracker = new MediaTracker(this);
 		textBox = getImage("/graphics/System/TextBox.png");
@@ -82,7 +84,9 @@ public class GameGUI extends JPanel{
 		
 		g.drawImage(textBox, 0, 350, null);
 		g.drawImage(coinBox, 1064, 0, null);
-		g.drawImage(buttonBox, 250, 520, null);
+		g.drawImage(buttonBox, 200, 520, null);
+		g.drawImage(buttonBox, 542, 520, null);
+		g.drawImage(buttonBox, 883, 520, null);
 	}
 	
 	public Image getImage(String pathName){
@@ -91,9 +95,49 @@ public class GameGUI extends JPanel{
 		return image;
 	}
 	
-	class ChangeSceneListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			changeScene(mainPlayer);
+	class ChangeSceneListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+	
+			if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
+			{
+				changeScene(mainPlayer);
+			}
+			
+			if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56))
+			{
+				changeScene(mainPlayer);
+			}
+		
+			if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
+			{
+				changeScene(mainPlayer);
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	
