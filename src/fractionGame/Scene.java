@@ -1,5 +1,6 @@
 package fractionGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -42,7 +43,7 @@ public class Scene extends JPanel{
 	}
 	
 	public Scene(String backgroundFile, String characterDialogue, int sceneNum, String characterFile, int difficulty) {
-		super();
+		this(backgroundFile, characterDialogue, sceneNum);
 		this.characterFile = characterFile;
 		this.difficulty = difficulty;
 		
@@ -65,6 +66,8 @@ public class Scene extends JPanel{
 		g.drawImage(background, 0, 0, null);
 		g.drawImage(character, 680, 30, null);
 		g.drawImage(progress, 0, 620, null);
+		g.setFont(g.getFont().deriveFont(20f));
+		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
 	
 	public void paintComponent(Graphics g){
@@ -78,20 +81,17 @@ public class Scene extends JPanel{
 	}
 	
 	
-	// example for splitting a string and drawing on newlines
-	/*void drawString(Graphics g, String text, int x, int y){
-		for (String line : text.split("\n"))
-			g.drawString(line,  x, y += g.getFontMetrics().getHeight());
-	}*/
+	// function to allow newlines to be used in a drawString function that also adds a border to the text
+	private void drawString(Graphics g, String text, int x, int y){
+		for (String line : text.split("\n")){
+			g.setColor(new Color(150, 150, 100));
+			g.drawString(line, x - 1, y += g.getFontMetrics().getHeight() - 1);
+			g.drawString(line, x - 1, y + 1);
+			g.drawString(line, x + 1, y - 1);
+			g.drawString(line, x + 1, y + 1);
+			g.setColor(new Color(200, 200, 150));
+			g.drawString(line, x, y);
+		}
+	}
 	
-	
-	// example for creating a border around text
-	/*
-	g.setColor(Color.red);
-	g.drawString("Outline", ShiftWest(x, 1), ShiftNorth(y, 1));
-	g.drawString("Outline", ShiftWest(x, 1), ShiftSouth(y, 1));
-	g.drawString("Outline", ShiftEast(x, 1), ShiftNorth(y, 1));
-	g.drawString("Outline", ShiftEast(x, 1), ShiftSouth(y, 1));
-	g.setColor(Color.yellow);
-	g.drawString("Outline", x, y);*/
 }
