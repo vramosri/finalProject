@@ -91,5 +91,15 @@ public class initialTests {
 		testGame.changeScene(testBar);
 		assertEquals(testBar.getProgress(), 1);
 	}
+	
+	@Test
+	public void testGenerateOption() {
+		//Tests that equal fractions are equal
+		testFraction = new Fraction(3, 12);
+		for(int i = 0; i< 100; i++){
+		assertFalse(testQuestion1.generateOption(testFraction).checkEquals(new Fraction(3,12)));
+		}
+	}	
+	
 
 }
