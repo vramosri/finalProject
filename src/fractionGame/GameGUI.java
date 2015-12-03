@@ -1,12 +1,110 @@
 package fractionGame;
 
-public class GameGUI {
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+
+public class GameGUI extends JPanel{
+	private ArrayList<Scene> scenes;
+	Player mainPlayer;
+	
+	private Image textBox;
+	private Image coinBox;
+	private MediaTracker tracker;
+	
+	//testing
+	private Scene test1;
+	private Scene test2;
+	private ImageIcon myImage;
+	int sceneNum = 1;
 	
 	public GameGUI(){
+		mainPlayer = new Player();
+		
+		test1 = new Scene("/graphics/Backgrounds/Beach.png", "Test", 1, "/graphics/Characters/Mermaid.png", 1);
+		test2 = new Scene("/graphics/Backgrounds/Cave.png", "Test", 2, "/graphics/Characters/Dwarf.png", 1);
+		
+		JButton button = new JButton();
+		add(button);
+		button.addActionListener(new testScene());
+		myImage = new ImageIcon(getImage("/graphics/System/Button.png"));
+		
+		Image original = myImage.getImage();
+		button.setIcon(myImage);
+		
+		
+		tracker = new MediaTracker(this);
+		textBox = getImage("/graphics/System/TextBox.png");
+		coinBox = getImage("/graphics/System/Coins.png");
+		tracker.addImage(textBox, 0);
+		tracker.addImage(coinBox, 0);
+		try {
+			tracker.waitForID(0);
+		} catch (InterruptedException e) {
+			return;
+		}
 		
 	}
 	
-	public void changeScene(ProgressBar progress){
-		progress.setProgress(progress.getProgress() + 1);
+	public void changeScene(Player mainPlayer){
+		mainPlayer.setProgress(mainPlayer.getProgress() + 1);
+		
+		if (sceneNum == 1)
+			sceneNum = 2;
+		else
+			sceneNum = 1;
+		repaint();
 	}
+	
+
+	
+	public void paintComponent(Graphics g){
+		if (sceneNum == 1)
+			test1.draw(g);
+		else
+			test2.draw(g);
+		
+		g.drawImage(textBox, 0, 350, null);
+		g.drawImage(coinBox, 1064, 0, null);
+	}
+	
+	public Image getImage(String pathName){
+		URL url = getClass().getResource(pathName);
+		Image image = Toolkit.getDefaultToolkit().getImage(url);
+		return image;
+	}
+	
+	class testScene implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			changeScene(mainPlayer);
+		}
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Image Play");
+		GameGUI panel = new GameGUI();
+		frame.add(panel, BorderLayout.CENTER);
+		frame.setSize(1280, 720);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setVisible(true);
+	}
+	
 }
+
+

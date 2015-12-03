@@ -9,6 +9,9 @@ public class Player {
 	private String name;
 	private ArrayList<String> items; //Optional right now
 	private String iconFile;
+	private int progress;
+	
+	public final static int TOTALPROGRESS = 12;
 	
 	public Player(){
 		
@@ -28,6 +31,14 @@ public class Player {
 
 	public void setCoins(int coins) {
 		this.coins = coins;
+	}
+	
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 	
 }
