@@ -23,6 +23,7 @@ public class GameGUI extends JPanel{
 	
 	private Image textBox;
 	private Image coinBox;
+	private Image buttonBox;
 	private MediaTracker tracker;
 	
 	//testing
@@ -39,7 +40,7 @@ public class GameGUI extends JPanel{
 		
 		JButton button = new JButton();
 		add(button);
-		button.addActionListener(new testScene());
+		button.addActionListener(new ChangeSceneListener());
 		myImage = new ImageIcon(getImage("/graphics/System/Button.png"));
 		
 		Image original = myImage.getImage();
@@ -49,8 +50,10 @@ public class GameGUI extends JPanel{
 		tracker = new MediaTracker(this);
 		textBox = getImage("/graphics/System/TextBox.png");
 		coinBox = getImage("/graphics/System/Coins.png");
+		buttonBox = getImage("/graphics/System/Button.png");
 		tracker.addImage(textBox, 0);
 		tracker.addImage(coinBox, 0);
+		tracker.addImage(buttonBox, 0);
 		try {
 			tracker.waitForID(0);
 		} catch (InterruptedException e) {
@@ -79,6 +82,7 @@ public class GameGUI extends JPanel{
 		
 		g.drawImage(textBox, 0, 350, null);
 		g.drawImage(coinBox, 1064, 0, null);
+		g.drawImage(buttonBox, 250, 520, null);
 	}
 	
 	public Image getImage(String pathName){
@@ -87,7 +91,7 @@ public class GameGUI extends JPanel{
 		return image;
 	}
 	
-	class testScene implements ActionListener {
+	class ChangeSceneListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			changeScene(mainPlayer);
 		}
