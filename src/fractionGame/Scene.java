@@ -70,6 +70,7 @@ public class Scene extends JPanel{
 		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
 	
+	
 	public void paintComponent(Graphics g){
 		draw(g);
 	}

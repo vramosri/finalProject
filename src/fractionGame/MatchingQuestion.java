@@ -17,7 +17,7 @@ public class MatchingQuestion extends Question {
 		switch(difficulty){
 		case 1:
 			while ((denominator == 0) || (denominator % 2 == 1)) {
-				denominator = r.nextInt(difficulty * 4 + 1);
+				denominator = r.nextInt(difficulty * 4 +1); // is the 1 supposed to be inside 
 			}
 			while ((numerator == 0) || (numerator > denominator)) {
 				numerator = r.nextInt(difficulty * 4) + 1;
