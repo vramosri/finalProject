@@ -154,7 +154,7 @@ public class initialTests {
 		for(int i = 0; i< 10000; i++){
 			testQuestion1.generateQuestion(4);
 			Fraction answer = testQuestion1.generateAnswer(4);
-			assertFalse(testQuestion1.generateOption(4, answer).checkEquals(testQuestion1.getCorrectAnswer()));
+			assertFalse(testQuestion1.generateOption(4).checkEquals(testQuestion1.getCorrectAnswer()));
 		}
 	}	
 }
