@@ -67,8 +67,8 @@ public class Scene extends JPanel{
 		g.drawImage(background, 0, 0, null);
 		g.drawImage(character, 680, 30, null);
 		g.drawImage(progress, 0, 620, null);
-		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
+	
 	
 	public void paintComponent(Graphics g){
 		draw(g);
@@ -80,18 +80,5 @@ public class Scene extends JPanel{
 		return image;
 	}
 	
-	
-	// function to allow newlines to be used in a drawString function that also adds a border to the text
-	private void drawString(Graphics g, String text, int x, int y){
-		for (String line : text.split("\n")){
-			g.setColor(new Color(150, 150, 100));
-			g.drawString(line, x - 1, y += g.getFontMetrics().getHeight() - 1);
-			g.drawString(line, x - 1, y + 1);
-			g.drawString(line, x + 1, y - 1);
-			g.drawString(line, x + 1, y + 1);
-			g.setColor(new Color(200, 200, 150));
-			g.drawString(line, x, y);
-		}
-	}
 	
 }

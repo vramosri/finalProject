@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -17,12 +18,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 
 
 public class GameGUI extends JPanel{
@@ -107,7 +113,9 @@ public class GameGUI extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		if (sceneNum == 1)
+		{	
 			test1.draw(g);
+		}
 		else
 			test2.draw(g);
 		
@@ -116,6 +124,7 @@ public class GameGUI extends JPanel{
 		g.drawImage(buttonBox, 200, 520, null);
 		g.drawImage(buttonBox, 542, 520, null);
 		g.drawImage(buttonBox, 883, 520, null);
+		draw(g);
 	}
 	
 	public Image getImage(String pathName){
@@ -165,6 +174,54 @@ public class GameGUI extends JPanel{
 		public void mouseReleased(MouseEvent arg0) {}
 	}
 	
+
+
+	
+	public void draw(Graphics g) {
+		MatchingQuestion question = new MatchingQuestion(); 
+		Fraction answer = question.generateQuestion(1); 
+		Fraction option1 = question.generateOption(answer); 
+		Fraction option2 = question.generateOption(answer); 
+		Fraction option; 
+		System.out.println(answer.toString());
+		ArrayList options = new ArrayList<Fraction>();
+		options.add(answer); 
+		options.add(option1);
+		options.add(option2);
+		Collections.shuffle(options);
+		int position = 0; 
+		
+		for (int i = 0; i < 2; i++)
+		{
+			if (options.get(i).checkEquals(answer))
+			{
+				position = i; 
+			}
+		}
+		
+		g.setFont(g.getFont().deriveFont(20f));
+		drawString(g, options.get(0).toString() , 650, 530);
+		g.setFont(g.getFont().deriveFont(20f));
+		drawString(g, options.get(1).toString() , 300, 530);
+		g.setFont(g.getFont().deriveFont(20f));
+		drawString(g, options.get(2).toString() , 985, 530);
+		
+		// test drawstring
+		drawString(g, "testing testing\nooh look a new line", 100, 400);
+	}
+	
+	// function to allow newlines to be used in a drawString function that also adds a border to the text
+	private void drawString(Graphics g, String text, int x, int y){
+		for (String line : text.split("\n")){
+			g.setColor(new Color(150, 150, 100));
+			g.drawString(line, x - 1, y += g.getFontMetrics().getHeight() - 1);
+			g.drawString(line, x - 1, y + 1);
+			g.drawString(line, x + 1, y - 1);
+			g.drawString(line, x + 1, y + 1);
+			g.setColor(new Color(200, 200, 150));
+			g.drawString(line, x, y);
+		}
+	}
 	
 	
 	public static void main(String[] args) {
