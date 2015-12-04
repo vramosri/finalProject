@@ -1,6 +1,7 @@
 package fractionGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -61,12 +62,11 @@ public class Scene extends JPanel{
 			return;
 		}
 	}
-	
+
 	public void draw(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 		g.drawImage(character, 680, 30, null);
 		g.drawImage(progress, 0, 620, null);
-		g.setFont(g.getFont().deriveFont(20f));
 		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
 	
