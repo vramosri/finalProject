@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Question {
 	
 	private ArrayList<Fraction> answers;
-	private String question; 
+	protected Fraction questionFraction;
 	protected Fraction correctAnswer; 
 	protected int coinValue;
 	protected int coins;
@@ -36,5 +36,10 @@ public abstract class Question {
 	public int getCoins(){
 		return coins;
 	}
+
+	public Fraction getQuestionFraction() {
+		return questionFraction;
+	}
+	
 	
 }
