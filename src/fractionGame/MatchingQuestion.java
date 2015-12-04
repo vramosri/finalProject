@@ -96,7 +96,7 @@ public class MatchingQuestion extends Question {
 		return correctAnswer;
 	}
 
-	public Fraction generateOption(int difficulty)
+	public Fraction generateOption(int difficulty, Fraction correctAnswer)
 	{
 		int num = correctAnswer.getNumerator();
 		int den = correctAnswer.getDenominator(); 

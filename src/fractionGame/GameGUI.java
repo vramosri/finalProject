@@ -156,8 +156,8 @@ public class GameGUI extends JPanel{
 	public void draw(Graphics g) {
 		MatchingQuestion question = new MatchingQuestion(); 
 		Fraction answer = question.generateQuestion(1); 
-		Fraction option1 = question.generateOption(answer); 
-		Fraction option2 = question.generateOption(answer); 
+		Fraction option1 = question.generateOption(1, answer); 
+		Fraction option2 = question.generateOption(1, answer); 
 		Fraction option; 
 		System.out.println(answer.toString());
 		ArrayList options = new ArrayList<Fraction>();
@@ -169,11 +169,12 @@ public class GameGUI extends JPanel{
 		
 		for (int i = 0; i < 2; i++)
 		{
-			if (options.get(i).checkEquals(answer))
+			if (options.get(i).equals(answer))
 			{
 				position = i; 
 			}
 		}
+		
 		
 		g.setFont(g.getFont().deriveFont(20f));
 		drawString(g, options.get(0).toString() , 650, 530);
