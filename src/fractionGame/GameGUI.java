@@ -38,15 +38,21 @@ public class GameGUI extends JPanel{
 	private Image textBox;
 	private Image coinBox;
 	private Image buttonBox;
+	private Image menuBox;
 	private MediaTracker tracker;
+	
+	private Fraction q;
+	private Fraction answer;
+	private Fraction option1;
+	private Fraction option2;
 	
 	Cursor inactiveCursor;
 	Cursor activeCursor;
-	
-	//testing
-	private Scene test1;
-	private Scene test2;
-	int sceneNum = 1;
+
+	int currentSceneNum;
+	int dialogueType;
+
+	int position = -1; 
 	
 	public GameGUI(){
 		// Create custom cursors for active and inactive and set the cursor as inactive
@@ -75,10 +81,31 @@ public class GameGUI extends JPanel{
 		
 		
 		mainPlayer = new Player();
+		scenes = new ArrayList();
+		currentSceneNum = 0;
+		dialogueType = 0;
 		
-		// create some scenes to test things with
-		test1 = new Scene("/graphics/Backgrounds/Beach.png", "Test", 1, "/graphics/Characters/Mermaid.png", 1);
-		test2 = new Scene("/graphics/Backgrounds/Cave.png", "Test", 2, "/graphics/Characters/Dwarf.png", 1);
+		
+		// create the scenes
+		// title scene
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 0));
+		// game scenes
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 0, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Beach.png", 1, "/graphics/Characters/Mermaid.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png", 2, "/graphics/Characters/Dwarf.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 3, "/graphics/Characters/Dwarf.png", 4));
+		
+		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png", 4, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png", 5, "/graphics/Characters/Dwarf.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Cave.png", 6, "/graphics/Characters/Dwarf.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png", 7, "/graphics/Characters/Dwarf.png", 4));
+		
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png", 8, "/graphics/Characters/Golem.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png", 9, "/graphics/Characters/Witch.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Village.png", 10, "/graphics/Characters/CatLady.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png", 11, "/graphics/Characters/Dwarf.png", 4));
+		// ending scene
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 12));
 		
 		
 		this.addMouseListener(new ChangeSceneListener());
@@ -88,6 +115,7 @@ public class GameGUI extends JPanel{
 		textBox = getImage("/graphics/System/TextBox.png");
 		coinBox = getImage("/graphics/System/Coins.png");
 		buttonBox = getImage("/graphics/System/Button.png");
+		menuBox = getImage("/graphics/System/TitleMenu.png");
 		tracker.addImage(textBox, 0);
 		tracker.addImage(coinBox, 0);
 		tracker.addImage(buttonBox, 0);
@@ -100,30 +128,44 @@ public class GameGUI extends JPanel{
 	}
 	
 	public void changeScene(Player mainPlayer){
-		mainPlayer.setProgress(mainPlayer.getProgress() + 1);
+		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
-		if (sceneNum == 1)
-			sceneNum = 2;
+		if (currentSceneNum == scenes.size()-1){
+			currentSceneNum = 0;
+			dialogueType = 0;
+		}
 		else
-			sceneNum = 1;
+			currentSceneNum++;
+		
+		if (currentSceneNum == 1)
+			dialogueType = 2;
+
+		
+		
 		repaint();
 	}
 	
 
 	
 	public void paintComponent(Graphics g){
-		if (sceneNum == 1)
-		{	
-			test1.draw(g);
-		}
-		else
-			test2.draw(g);
+		// draw the current scene
+		scenes.get(currentSceneNum).draw(g);
 		
-		g.drawImage(textBox, 0, 350, null);
-		g.drawImage(coinBox, 1064, 0, null);
-		g.drawImage(buttonBox, 200, 520, null);
-		g.drawImage(buttonBox, 542, 520, null);
-		g.drawImage(buttonBox, 883, 520, null);
+		// draw the title menu if the title screen is open
+		if(currentSceneNum == 0)
+			g.drawImage(menuBox, 0, -80, null);
+		else {
+			g.drawImage(textBox, 0, 350, null);
+			g.drawImage(coinBox, 1064, 0, null);
+		}
+			
+		// draw the buttons if the dialogue is ready for interaction
+		if(dialogueType == 2) {
+			g.drawImage(buttonBox, 200, 520, null);
+			g.drawImage(buttonBox, 542, 520, null);
+			g.drawImage(buttonBox, 883, 520, null);
+		}
+		
 		draw(g);
 	}
 	
@@ -137,35 +179,44 @@ public class GameGUI extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-	
-			if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
+			// Title screen buttons
+			if (currentSceneNum == 0){
+				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (439 - 80) && e.getY() < (493 - 80)) {
+					changeScene(mainPlayer);
+				}
+				
+				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (543 - 80) && e.getY() < (596 - 80)) {
+					changeScene(mainPlayer);
+				}
 			}
+
+
+			// Dialogue Buttons
+			if (dialogueType == 2){
+				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
+				{
+					System.out.println("You've answered correctly");
+					changeScene(mainPlayer);
+				}
+				
+				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
+				{
+					System.out.println("You've answered correctly");
+					changeScene(mainPlayer);
+				}
 			
-			if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
-			}
-		
-			if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
+				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
+				{
+					System.out.println("You've answered correctly");
+					changeScene(mainPlayer);
+				}
 			}
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// change cursor icon to active
-			setCursor(activeCursor);
-		}
-
+		public void mouseEntered(MouseEvent arg0) {}
 		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// change cursor icon to inactive
-			setCursor(inactiveCursor);
-		}
-
+		public void mouseExited(MouseEvent arg0) {}
 		@Override
 		public void mousePressed(MouseEvent arg0) {}
 		@Override
@@ -173,37 +224,66 @@ public class GameGUI extends JPanel{
 	}
 	
 
-
+	public ArrayList<Fraction> generate(int difficulty) {
+		 MatchingQuestion question = new MatchingQuestion(); 
+		 q = question.generateQuestion(difficulty); 
+		 answer = question.generateAnswer(difficulty); 
+		 option1 = question.generateOption(difficulty); 
+		 option2 = question.generateOption(difficulty); 
+		 
+			ArrayList options = new ArrayList<Fraction>();
+			options.add(answer); 
+			options.add(option1);
+			
+			while(options.size() <3)
+			{
+			if (!option1.checkEquals(option2))
+			{
+				options.add(option2);
+				
+			}
+			else {
+				option2 = question.generateOption(difficulty); 
+			}
+			}
+			System.out.println("Option 1: " + option1);
+			System.out.println("Option 2: " + option2);
+			return options; 
+			
+	}
+	
 	
 	public void draw(Graphics g) {
-		MatchingQuestion question = new MatchingQuestion(); 
-		Fraction q = question.generateQuestion(1); 
-		Fraction answer = question.generateAnswer(1); 
-		Fraction option1 = question.generateOption(1); 
-		Fraction option2 = question.generateOption(1); 
-		Fraction option; 
-		System.out.println(answer.toString());
+		boolean foundAnswer = false; 
 		ArrayList options = new ArrayList<Fraction>();
-		options.add(answer); 
-		options.add(option1);
-		options.add(option2);
-		Collections.shuffle(options);
-		int position = 0; 
-		
-		for (int i = 0; i < 2; i++)
+		options = generate(1); 
+
+		Random randy = new Random();
+		int random = randy.nextInt(3);
+		if (random == 0 && foundAnswer == false)
 		{
-			if (options.get(i).equals(answer))
-			{
-				position = i; 
-			}
+			position = 1; 
+			foundAnswer = true; 
 		}
-		
-		drawString(g, options.get(0).toString() , 650, 510);
-		drawString(g, options.get(1).toString() , 300, 510);
-		drawString(g, options.get(2).toString() , 985, 510);
-		
-		// test drawstring
-		drawString(g, "testing testing\nooh look a new line", 100, 400);
+		drawString(g, options.get(random).toString() , 650, 510);
+		options.remove(random); 
+		random = randy.nextInt(2);
+		if (random == 0 && foundAnswer == false)
+		{
+			position = 0; 
+			foundAnswer = true; 
+		}
+		drawString(g, options.get(random).toString() , 300, 510);
+		options.remove(random); 
+		random = randy.nextInt(1);
+		if (random == 0 && foundAnswer == false)
+		{
+			position = 2; 
+			foundAnswer = true; 
+		}
+		drawString(g, options.get(random).toString() , 985, 510);
+		drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
+		System.out.println(position);
 	}
 	
 	// function to allow newlines to be used in a drawString function that also adds a border to the text

@@ -16,7 +16,6 @@ public class Scene extends JPanel{
 	private String backgroundFile; 
 	private String characterFile;
 	private String progressFile;
-	private String characterDialogue;
 	private Question question;
 	private int difficulty;
 	private int sceneNum;
@@ -26,9 +25,8 @@ public class Scene extends JPanel{
 	private Image progress;
 	private MediaTracker tracker;
 	
-	public Scene(String backgroundFile, String characterDialogue, int sceneNum) {
+	public Scene(String backgroundFile, int sceneNum) {
 		this.backgroundFile = backgroundFile;
-		this.characterDialogue = characterDialogue;
 		this.sceneNum = sceneNum;
 		
 		tracker = new MediaTracker(this);
@@ -43,8 +41,8 @@ public class Scene extends JPanel{
 		}
 	}
 	
-	public Scene(String backgroundFile, String characterDialogue, int sceneNum, String characterFile, int difficulty) {
-		this(backgroundFile, characterDialogue, sceneNum);
+	public Scene(String backgroundFile, int sceneNum, String characterFile, int difficulty) {
+		this(backgroundFile, sceneNum);
 		this.characterFile = characterFile;
 		this.difficulty = difficulty;
 		
@@ -78,6 +76,10 @@ public class Scene extends JPanel{
 		URL url = getClass().getResource(pathName);
 		Image image = Toolkit.getDefaultToolkit().getImage(url);
 		return image;
+	}
+
+	public int getSceneNum() {
+		return sceneNum;
 	}
 	
 	
