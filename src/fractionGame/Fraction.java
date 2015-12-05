@@ -12,7 +12,8 @@ public class Fraction {
 	
 	@Override
 	public String toString() {
-		return "Fraction [Numerator=" + Numerator + ", Denominator=" + Denominator + "]";
+		String string  = " " + Numerator + "/" + Denominator;
+		return string; 
 	} 
 	
 	public boolean checkEquals(Fraction fraction){

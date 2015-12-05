@@ -17,7 +17,7 @@ public class MatchingQuestion extends Question {
 		switch(difficulty){
 		case 1:
 			while ((denominator == 0) || (denominator % 2 == 1)) {
-				denominator = r.nextInt(difficulty * 4 + 1);
+				denominator = r.nextInt(difficulty * 4) + 1; 
 			}
 			while ((numerator == 0) || (numerator > denominator)) {
 				numerator = r.nextInt(difficulty * 4) + 1;
@@ -35,7 +35,7 @@ public class MatchingQuestion extends Question {
 			while ((denominator == 0) || (denominator % 2 == 1) || (denominator < 8)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
-			while ((numerator == 0) || (numerator > denominator - 2)) {
+			while ((numerator <= 1) || (numerator > denominator - 2)) {
 				numerator = r.nextInt(difficulty * 4) + 1;
 			}
 			break;
@@ -43,7 +43,7 @@ public class MatchingQuestion extends Question {
 			while ((denominator == 0) || (denominator < 10)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
-			while ((numerator == 0) || (numerator > denominator)) {
+			while ((numerator <= 1) || (numerator > denominator)) {
 				numerator = r.nextInt(difficulty * 4);
 			}
 			break;
@@ -78,14 +78,15 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		case 3:
-			while(((double) numerator / denominator < (double) questionFraction.getNumerator() / questionFraction.getDenominator())){
+			denominator = 1;
+			while(((double) numerator / denominator <= (double) questionFraction.getNumerator() / questionFraction.getDenominator())){
 				numerator = (questionFraction.getNumerator() + r.nextInt(difficulty));
 				denominator = questionFraction.getDenominator();
 			}
 			break;
 		case 4:
 			denominator = 1;
-			while(((double) numerator / denominator < (double) questionFraction.getNumerator() / questionFraction.getDenominator()) || (numerator > denominator + 2)){
+			while(((double) numerator / denominator <= (double) questionFraction.getNumerator() / questionFraction.getDenominator()) || (numerator > denominator + 2)){
 				numerator = r.nextInt(difficulty * 4);
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
@@ -98,13 +99,15 @@ public class MatchingQuestion extends Question {
 
 	public Fraction generateOption(int difficulty)
 	{
-		int num = correctAnswer.getNumerator();
-		int den = correctAnswer.getDenominator(); 
+		int num;
+		int den;
 	
 		Random randy = new Random();
 		int random = randy.nextInt(5);
 		
 		if (difficulty == 1 || difficulty == 2) {
+			num = correctAnswer.getNumerator();
+			den = correctAnswer.getDenominator(); 
 			switch (random) {
 			case 0:
 				den = den + 1;
@@ -139,13 +142,14 @@ public class MatchingQuestion extends Question {
 			}
 		}
 		else{
+			num = questionFraction.getNumerator();
+			den = questionFraction.getDenominator();
 			switch (random) {
 			case 0:
 				if(num == den)
 					num = 1;
 				else{
-					num = questionFraction.getNumerator();
-					den = questionFraction.getDenominator();
+					num--;
 				}
 				break;
 			case 1:
@@ -160,10 +164,8 @@ public class MatchingQuestion extends Question {
 				den++;
 				break;
 			case 3:
-				if(num == den)
-					num = 1;
-				else{
-					num = questionFraction.getNumerator();
+				while(num == questionFraction.getNumerator() || num <= 0){
+					num = (questionFraction.getNumerator() - randy.nextInt(difficulty));
 					den = questionFraction.getDenominator();
 				}
 				break;
