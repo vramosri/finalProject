@@ -51,6 +51,8 @@ public class GameGUI extends JPanel{
 
 	int currentSceneNum;
 	int dialogueType;
+
+	int position = -1; 
 	
 	public GameGUI(){
 		// Create custom cursors for active and inactive and set the cursor as inactive
@@ -187,18 +189,25 @@ public class GameGUI extends JPanel{
 					changeScene(mainPlayer);
 				}
 			}
-			
-			// Dialogue buttons
+
+
+			// Dialogue Buttons
 			if (dialogueType == 2){
-				if (e.getX() > 200 && e.getX() < (200 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
+				{
+					System.out.println("You've answered correctly");
 					changeScene(mainPlayer);
 				}
-
-				if (e.getX() > 542 && e.getX() < (542 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+				
+				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
+				{
+					System.out.println("You've answered correctly");
 					changeScene(mainPlayer);
 				}
-
-				if (e.getX() > 883 && e.getX() < (883 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+			
+				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
+				{
+					System.out.println("You've answered correctly");
 					changeScene(mainPlayer);
 				}
 			}
@@ -225,7 +234,6 @@ public class GameGUI extends JPanel{
 			ArrayList options = new ArrayList<Fraction>();
 			options.add(answer); 
 			options.add(option1);
-
 			
 			while(options.size() <3)
 			{
@@ -246,25 +254,35 @@ public class GameGUI extends JPanel{
 	
 	
 	public void draw(Graphics g) {
-	
+		boolean foundAnswer = false; 
 		ArrayList options = new ArrayList<Fraction>();
 		options = generate(1); 
-		Collections.shuffle(options);
-		int position = 0; 
-		
-		for (int i = 0; i < 3; i++)
-		{
-			if (options.get(i).equals(answer))
-			{
-				position = i; 
-			}
 
+		Random randy = new Random();
+		int random = randy.nextInt(3);
+		if (random == 0 && foundAnswer == false)
+		{
+			position = 1; 
+			foundAnswer = true; 
 		}
-	
+		drawString(g, options.get(random).toString() , 650, 510);
+		options.remove(random); 
+		random = randy.nextInt(2);
+		if (random == 0 && foundAnswer == false)
+		{
+			position = 0; 
+			foundAnswer = true; 
+		}
+		drawString(g, options.get(random).toString() , 300, 510);
+		options.remove(random); 
+		random = randy.nextInt(1);
+		if (random == 0 && foundAnswer == false)
+		{
+			position = 2; 
+			foundAnswer = true; 
+		}
+		drawString(g, options.get(random).toString() , 985, 510);
 		drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
-		drawString(g, options.get(0).toString() , 650, 510);
-		drawString(g, options.get(1).toString() , 300, 510);
-		drawString(g, options.get(2).toString() , 985, 510);
 		System.out.println(position);
 	}
 	
