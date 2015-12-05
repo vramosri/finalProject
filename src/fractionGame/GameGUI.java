@@ -39,7 +39,10 @@ public class GameGUI extends JPanel{
 	private Image coinBox;
 	private Image buttonBox;
 	private MediaTracker tracker;
-	
+	private Fraction q;
+	private Fraction answer;
+	private Fraction option1;
+	private Fraction option2;
 	Cursor inactiveCursor;
 	Cursor activeCursor;
 	
@@ -173,35 +176,57 @@ public class GameGUI extends JPanel{
 	}
 	
 
+	public ArrayList<Fraction> generate(int difficulty) {
+		 MatchingQuestion question = new MatchingQuestion(); 
+		 q = question.generateQuestion(difficulty); 
+		 answer = question.generateAnswer(difficulty); 
+		 option1 = question.generateOption(difficulty); 
+		 option2 = question.generateOption(difficulty); 
+		 
+			ArrayList options = new ArrayList<Fraction>();
+			options.add(answer); 
+			options.add(option1);
 
+			
+			while(options.size() <3)
+			{
+			if (!option1.checkEquals(option2))
+			{
+				options.add(option2);
+				
+			}
+			else {
+				option2 = question.generateOption(difficulty); 
+			}
+			}
+			System.out.println("Option 1: " + option1);
+			System.out.println("Option 2: " + option2);
+			return options; 
+			
+	}
+	
 	
 	public void draw(Graphics g) {
-		MatchingQuestion question = new MatchingQuestion(); 
-		Fraction q = question.generateQuestion(1); 
-		Fraction answer = question.generateAnswer(1); 
-		Fraction option1 = question.generateOption(1); 
-		Fraction option2 = question.generateOption(1); 
-		Fraction option; 
-		System.out.println(answer.toString());
+	
 		ArrayList options = new ArrayList<Fraction>();
-		options.add(answer); 
-		options.add(option1);
-		options.add(option2);
+		options = generate(1); 
 		Collections.shuffle(options);
 		int position = 0; 
 		
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			if (options.get(i).equals(answer))
 			{
 				position = i; 
 			}
+
 		}
-		
+	
+		drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
 		drawString(g, options.get(0).toString() , 650, 510);
 		drawString(g, options.get(1).toString() , 300, 510);
 		drawString(g, options.get(2).toString() , 985, 510);
-		
+		System.out.println(position);
 		// test drawstring
 		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
