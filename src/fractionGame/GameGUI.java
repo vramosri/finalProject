@@ -42,11 +42,8 @@ public class GameGUI extends JPanel{
 	
 	Cursor inactiveCursor;
 	Cursor activeCursor;
-	
-	//testing
-	private Scene test1;
-	private Scene test2;
-	int sceneNum = 1;
+
+	int currentSceneNum = 0;
 	
 	public GameGUI(){
 		// Create custom cursors for active and inactive and set the cursor as inactive
@@ -75,10 +72,29 @@ public class GameGUI extends JPanel{
 		
 		
 		mainPlayer = new Player();
+		scenes = new ArrayList();
 		
-		// create some scenes to test things with
-		test1 = new Scene("/graphics/Backgrounds/Beach.png", "Test", 1, "/graphics/Characters/Mermaid.png", 1);
-		test2 = new Scene("/graphics/Backgrounds/Cave.png", "Test", 2, "/graphics/Characters/Dwarf.png", 1);
+		
+		// create the scenes
+		// title scene
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 0));
+		// game scenes
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 0, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Beach.png", 1, "/graphics/Characters/Mermaid.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png", 2, "/graphics/Characters/Dwarf.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 3, "/graphics/Characters/Dwarf.png", 4));
+		
+		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png", 4, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png", 5, "/graphics/Characters/Dwarf.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Cave.png", 6, "/graphics/Characters/Dwarf.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png", 7, "/graphics/Characters/Dwarf.png", 4));
+		
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png", 8, "/graphics/Characters/Golem.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png", 9, "/graphics/Characters/Witch.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Village.png", 10, "/graphics/Characters/CatLady.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png", 11, "/graphics/Characters/Dwarf.png", 4));
+		// ending scene
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 12));
 		
 		
 		this.addMouseListener(new ChangeSceneListener());
@@ -100,24 +116,22 @@ public class GameGUI extends JPanel{
 	}
 	
 	public void changeScene(Player mainPlayer){
-		mainPlayer.setProgress(mainPlayer.getProgress() + 1);
+		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
-		if (sceneNum == 1)
-			sceneNum = 2;
+		if (currentSceneNum == scenes.size()-1)
+			currentSceneNum = 0;
 		else
-			sceneNum = 1;
+			currentSceneNum++;
+		
+		
+		
 		repaint();
 	}
 	
 
 	
 	public void paintComponent(Graphics g){
-		if (sceneNum == 1)
-		{	
-			test1.draw(g);
-		}
-		else
-			test2.draw(g);
+		scenes.get(currentSceneNum).draw(g);
 		
 		g.drawImage(textBox, 0, 350, null);
 		g.drawImage(coinBox, 1064, 0, null);
@@ -157,14 +171,12 @@ public class GameGUI extends JPanel{
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// change cursor icon to active
-			System.out.println("Inside button");
 			setCursor(activeCursor);
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// change cursor icon to inactive
-			System.out.println("Outside button");
 			setCursor(inactiveCursor);
 		}
 
@@ -179,9 +191,10 @@ public class GameGUI extends JPanel{
 	
 	public void draw(Graphics g) {
 		MatchingQuestion question = new MatchingQuestion(); 
-		Fraction answer = question.generateQuestion(1); 
-		Fraction option1 = question.generateOption(answer); 
-		Fraction option2 = question.generateOption(answer); 
+		Fraction q = question.generateQuestion(1); 
+		Fraction answer = question.generateAnswer(1); 
+		Fraction option1 = question.generateOption(1); 
+		Fraction option2 = question.generateOption(1); 
 		Fraction option; 
 		System.out.println(answer.toString());
 		ArrayList options = new ArrayList<Fraction>();
@@ -193,18 +206,15 @@ public class GameGUI extends JPanel{
 		
 		for (int i = 0; i < 2; i++)
 		{
-			if (options.get(i).checkEquals(answer))
+			if (options.get(i).equals(answer))
 			{
 				position = i; 
 			}
 		}
 		
-		g.setFont(g.getFont().deriveFont(20f));
-		drawString(g, options.get(0).toString() , 650, 530);
-		g.setFont(g.getFont().deriveFont(20f));
-		drawString(g, options.get(1).toString() , 300, 530);
-		g.setFont(g.getFont().deriveFont(20f));
-		drawString(g, options.get(2).toString() , 985, 530);
+		drawString(g, options.get(0).toString() , 650, 510);
+		drawString(g, options.get(1).toString() , 300, 510);
+		drawString(g, options.get(2).toString() , 985, 510);
 		
 		// test drawstring
 		drawString(g, "testing testing\nooh look a new line", 100, 400);

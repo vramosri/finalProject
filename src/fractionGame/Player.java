@@ -8,17 +8,13 @@ public class Player {
 	private int coins;
 	private String name;
 	private ArrayList<String> items; //Optional right now
-	private String iconFile;
 	private int progress;
 	
 	public final static int TOTALPROGRESS = 12;
 	
 	public Player(){
-		
-	}
-	
-	public void draw(){
-		
+		coins = 0;
+		progress = 0;
 	}
 	
 	public void addCoins(int coins){
