@@ -38,15 +38,19 @@ public class GameGUI extends JPanel{
 	private Image textBox;
 	private Image coinBox;
 	private Image buttonBox;
+	private Image menuBox;
 	private MediaTracker tracker;
+	
 	private Fraction q;
 	private Fraction answer;
 	private Fraction option1;
 	private Fraction option2;
+	
 	Cursor inactiveCursor;
 	Cursor activeCursor;
 
-	int currentSceneNum = 0;
+	int currentSceneNum;
+	int dialogueType;
 	
 	public GameGUI(){
 		// Create custom cursors for active and inactive and set the cursor as inactive
@@ -76,6 +80,8 @@ public class GameGUI extends JPanel{
 		
 		mainPlayer = new Player();
 		scenes = new ArrayList();
+		currentSceneNum = 0;
+		dialogueType = 0;
 		
 		
 		// create the scenes
@@ -107,6 +113,7 @@ public class GameGUI extends JPanel{
 		textBox = getImage("/graphics/System/TextBox.png");
 		coinBox = getImage("/graphics/System/Coins.png");
 		buttonBox = getImage("/graphics/System/Button.png");
+		menuBox = getImage("/graphics/System/TitleMenu.png");
 		tracker.addImage(textBox, 0);
 		tracker.addImage(coinBox, 0);
 		tracker.addImage(buttonBox, 0);
@@ -121,11 +128,16 @@ public class GameGUI extends JPanel{
 	public void changeScene(Player mainPlayer){
 		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
-		if (currentSceneNum == scenes.size()-1)
+		if (currentSceneNum == scenes.size()-1){
 			currentSceneNum = 0;
+			dialogueType = 0;
+		}
 		else
 			currentSceneNum++;
 		
+		if (currentSceneNum == 1)
+			dialogueType = 2;
+
 		
 		
 		repaint();
@@ -134,13 +146,24 @@ public class GameGUI extends JPanel{
 
 	
 	public void paintComponent(Graphics g){
+		// draw the current scene
 		scenes.get(currentSceneNum).draw(g);
 		
-		g.drawImage(textBox, 0, 350, null);
-		g.drawImage(coinBox, 1064, 0, null);
-		g.drawImage(buttonBox, 200, 520, null);
-		g.drawImage(buttonBox, 542, 520, null);
-		g.drawImage(buttonBox, 883, 520, null);
+		// draw the title menu if the title screen is open
+		if(currentSceneNum == 0)
+			g.drawImage(menuBox, 0, -80, null);
+		else {
+			g.drawImage(textBox, 0, 350, null);
+			g.drawImage(coinBox, 1064, 0, null);
+		}
+			
+		// draw the buttons if the dialogue is ready for interaction
+		if(dialogueType == 2) {
+			g.drawImage(buttonBox, 200, 520, null);
+			g.drawImage(buttonBox, 542, 520, null);
+			g.drawImage(buttonBox, 883, 520, null);
+		}
+		
 		draw(g);
 	}
 	
@@ -154,35 +177,37 @@ public class GameGUI extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-	
-			if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
+			// Title screen buttons
+			if (currentSceneNum == 0){
+				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (439 - 80) && e.getY() < (493 - 80)) {
+					changeScene(mainPlayer);
+				}
+				
+				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (543 - 80) && e.getY() < (596 - 80)) {
+					changeScene(mainPlayer);
+				}
 			}
 			
-			if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
-			}
-		
-			if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
-			{
-				changeScene(mainPlayer);
+			// Dialogue buttons
+			if (dialogueType == 2){
+				if (e.getX() > 200 && e.getX() < (200 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+					changeScene(mainPlayer);
+				}
+
+				if (e.getX() > 542 && e.getX() < (542 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+					changeScene(mainPlayer);
+				}
+
+				if (e.getX() > 883 && e.getX() < (883 + 197) && e.getY() > 520 && e.getY() < (520 + 56)) {
+					changeScene(mainPlayer);
+				}
 			}
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// change cursor icon to active
-			setCursor(activeCursor);
-		}
-
+		public void mouseEntered(MouseEvent arg0) {}
 		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// change cursor icon to inactive
-			setCursor(inactiveCursor);
-		}
-
+		public void mouseExited(MouseEvent arg0) {}
 		@Override
 		public void mousePressed(MouseEvent arg0) {}
 		@Override
@@ -241,8 +266,6 @@ public class GameGUI extends JPanel{
 		drawString(g, options.get(1).toString() , 300, 510);
 		drawString(g, options.get(2).toString() , 985, 510);
 		System.out.println(position);
-		// test drawstring
-		drawString(g, "testing testing\nooh look a new line", 100, 400);
 	}
 	
 	// function to allow newlines to be used in a drawString function that also adds a border to the text
