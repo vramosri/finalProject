@@ -16,7 +16,7 @@ public class MultiplicationQuestion extends Question {
 		Random r = new Random();
 		return new Fraction(numerator, denominator); 
 	}
-	public Fraction generateAnswer() {
+	public Fraction generateAnswer(int difficulty) {
 		Fraction fra = new Fraction(1,2); 
 		return fra; 
 	}
@@ -30,5 +30,11 @@ public class MultiplicationQuestion extends Question {
 	public int getCoinValue(){
 		return coinValue;
 	}
-	
+
+	@Override
+	public Fraction generateOption(int difficulty) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

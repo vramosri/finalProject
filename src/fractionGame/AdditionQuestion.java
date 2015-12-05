@@ -12,7 +12,7 @@ public class AdditionQuestion extends Question {
 		// TODO: Make sure that the denominator is not 0 when generating random fraction
 		return null; 
 	}
-	public Fraction generateAnswer() {
+	public Fraction generateAnswer(int difficulty) {
 		Fraction fra = new Fraction(1,2); 
 		return fra; 
 	}
@@ -28,6 +28,12 @@ public class AdditionQuestion extends Question {
 	
 	public int getCoinValue(){
 		return coinValue;
+	}
+
+	@Override
+	public Fraction generateOption(int difficulty) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

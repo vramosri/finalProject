@@ -81,6 +81,10 @@ public class Scene extends JPanel{
 	public int getSceneNum() {
 		return sceneNum;
 	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
 	
 	
 }

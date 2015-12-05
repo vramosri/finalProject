@@ -45,7 +45,7 @@ public class GameGUI extends JPanel{
 	private Fraction answer;
 	private Fraction option1;
 	private Fraction option2;
-	
+	private Question currentQuestion;
 	Cursor inactiveCursor;
 	Cursor activeCursor;
 
@@ -119,6 +119,7 @@ public class GameGUI extends JPanel{
 		tracker.addImage(textBox, 0);
 		tracker.addImage(coinBox, 0);
 		tracker.addImage(buttonBox, 0);
+		tracker.addImage(menuBox, 0);
 		try {
 			tracker.waitForID(0);
 		} catch (InterruptedException e) {
@@ -195,21 +196,34 @@ public class GameGUI extends JPanel{
 			if (dialogueType == 2){
 				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
 				{
-					System.out.println("You've answered correctly");
+					mainPlayer.addCoins(currentQuestion.getCoins());
 					changeScene(mainPlayer);
+					
 				}
-				
+				else if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
+				{
+					currentQuestion.reduceCoins();
+				}
 				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
 				{
-					System.out.println("You've answered correctly");
+					mainPlayer.addCoins(currentQuestion.getCoins());
 					changeScene(mainPlayer);
 				}
-			
+				else if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56))
+				{
+					currentQuestion.reduceCoins();
+				}
 				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
 				{
-					System.out.println("You've answered correctly");
+					mainPlayer.addCoins(currentQuestion.getCoins());
 					changeScene(mainPlayer);
 				}
+				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
+				{
+					currentQuestion.reduceCoins();
+				}
+				
+				System.out.println("Coins: " + mainPlayer.getCoins());
 			}
 		}
 
@@ -225,11 +239,11 @@ public class GameGUI extends JPanel{
 	
 
 	public ArrayList<Fraction> generate(int difficulty) {
-		 MatchingQuestion question = new MatchingQuestion(); 
-		 q = question.generateQuestion(difficulty); 
-		 answer = question.generateAnswer(difficulty); 
-		 option1 = question.generateOption(difficulty); 
-		 option2 = question.generateOption(difficulty); 
+		 currentQuestion = new MatchingQuestion(); 
+		 q = currentQuestion.generateQuestion(difficulty); 
+		 answer = currentQuestion.generateAnswer(difficulty); 
+		 option1 = currentQuestion.generateOption(difficulty); 
+		 option2 = currentQuestion.generateOption(difficulty); 
 		 
 			ArrayList options = new ArrayList<Fraction>();
 			options.add(answer); 
@@ -243,7 +257,7 @@ public class GameGUI extends JPanel{
 				
 			}
 			else {
-				option2 = question.generateOption(difficulty); 
+				option2 = currentQuestion.generateOption(difficulty); 
 			}
 			}
 			System.out.println("Option 1: " + option1);
@@ -256,7 +270,7 @@ public class GameGUI extends JPanel{
 	public void draw(Graphics g) {
 		boolean foundAnswer = false; 
 		ArrayList options = new ArrayList<Fraction>();
-		options = generate(1); 
+		options = generate(scenes.get(currentSceneNum).getDifficulty()); // Make sure to change according to scene 
 
 		Random randy = new Random();
 		int random = randy.nextInt(3);
@@ -283,7 +297,7 @@ public class GameGUI extends JPanel{
 		}
 		drawString(g, options.get(random).toString() , 985, 510);
 		drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
-		System.out.println(position);
+		drawString(g, "" + mainPlayer.getCoins() +"" , 1210, 18);
 	}
 	
 	// function to allow newlines to be used in a drawString function that also adds a border to the text

@@ -40,6 +40,11 @@ public abstract class Question {
 	public Fraction getQuestionFraction() {
 		return questionFraction;
 	}
-	
+
+	public abstract Fraction generateOption(int difficulty);
+
+	public abstract Fraction generateQuestion(int difficulty);
+
+	public abstract Fraction generateAnswer(int difficulty);
 	
 }
