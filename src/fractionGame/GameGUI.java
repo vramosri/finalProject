@@ -139,6 +139,7 @@ public class GameGUI extends JPanel{
 	
 	public void changeScene(Player mainPlayer){
 		clip.stop();
+		clip.close();
 		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
