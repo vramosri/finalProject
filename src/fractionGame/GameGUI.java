@@ -22,7 +22,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -151,6 +156,30 @@ public class GameGUI extends JPanel{
 	public void paintComponent(Graphics g){
 		// draw the current scene
 		scenes.get(currentSceneNum).draw(g);
+		
+		// play the music for the current scene
+		String soundName = scenes.get(currentSceneNum).getMusicFile();    
+		AudioInputStream audioInputStream = null;
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Clip clip = null;
+		try {
+			clip = AudioSystem.getClip();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			clip.open(audioInputStream);
+		} catch (LineUnavailableException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		clip.start();
 		
 		// draw the title menu if the title screen is open
 		if(currentSceneNum == 0)
