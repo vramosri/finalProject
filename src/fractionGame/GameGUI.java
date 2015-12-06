@@ -92,18 +92,18 @@ public class GameGUI extends JPanel{
 		// game scenes
 		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 0, "/graphics/Characters/Dwarf.png", 1));
 		scenes.add(new Scene("/graphics/Backgrounds/Beach.png", 1, "/graphics/Characters/Mermaid.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png", 2, "/graphics/Characters/Dwarf.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 3, "/graphics/Characters/Dwarf.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png", 2, "/graphics/Characters/Traveller.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Ruins.png", 3, "/graphics/Characters/ScavengerCat.png", 4));
 		
-		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png", 4, "/graphics/Characters/Dwarf.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png", 5, "/graphics/Characters/Dwarf.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Cave.png", 6, "/graphics/Characters/Dwarf.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png", 7, "/graphics/Characters/Dwarf.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png", 4, "/graphics/Characters/Elf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png", 5, "/graphics/Characters/Otter.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Cave.png", 6, "/graphics/Characters/Goblin.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png", 7, "/graphics/Characters/Dragon.png", 4));
 		
 		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png", 8, "/graphics/Characters/Golem.png", 1));
 		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png", 9, "/graphics/Characters/Witch.png", 2));
 		scenes.add(new Scene("/graphics/Backgrounds/Village.png", 10, "/graphics/Characters/CatLady.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png", 11, "/graphics/Characters/Dwarf.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png", 11, "/graphics/Characters/Beggar.png", 4));
 		// ending scene
 		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png", 12));
 		
