@@ -39,6 +39,8 @@ import javax.swing.JPanel;
 public class GameGUI extends JPanel{
 	private ArrayList<Scene> scenes;
 	Player mainPlayer;
+	private AudioInputStream audioInputStream;
+	private Clip clip;
 	
 	private Image textBox;
 	private Image coinBox;
@@ -93,26 +95,26 @@ public class GameGUI extends JPanel{
 		
 		// create the scenes
 		// title scene
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.mp3", 0));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.wav", 0, SceneType.TITLE));
 		// intro scene
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.mp3", 0));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.wav", 0, SceneType.INTRO));
 		// game scenes
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/2_Local Forecast.mp3", 0, "/graphics/Characters/Dwarf.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Beach.png","/music/3_Pamgaea.pm3", 1, "/graphics/Characters/Mermaid.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png","/music/4_One-Eyed Maestro.mp3", 2, "/graphics/Characters/Traveller.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Ruins.png","/music/5_Sneaky Snitch.mp3", 3, "/graphics/Characters/ScavengerCat.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/2_Local Forecast.wav", 0, SceneType.STORY, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Beach.png","/music/3_Pamgaea.wav", 1, SceneType.STORY, "/graphics/Characters/Mermaid.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png","/music/4_One-Eyed Maestro.wav", 2, SceneType.STORY, "/graphics/Characters/Traveller.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Ruins.png","/music/5_Sneaky Snitch.wav", 3, SceneType.STORY, "/graphics/Characters/ScavengerCat.png", 4));
 		
-		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png","/music/6_Run Amok.mp3", 4, "/graphics/Characters/Elf.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png","/music/7_Meatball Parade.mp3", 5, "/graphics/Characters/Otter.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Cave.png","/music/8_Scheming Weasel faster.mp3", 6, "/graphics/Characters/Goblin.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png","/music/9_Five Armies.mp3", 7, "/graphics/Characters/Dragon.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png","/music/6_Run Amok.wav", 4, SceneType.STORY, "/graphics/Characters/Elf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png","/music/7_Meatball Parade.wav", 5, SceneType.STORY, "/graphics/Characters/Otter.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Cave.png","/music/8_Scheming Weasel faster.wav", 6, SceneType.STORY, "/graphics/Characters/Goblin.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png","/music/9_Five Armies.wav", 7, SceneType.STORY, "/graphics/Characters/Dragon.png", 4));
 		
-		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png","/music/10_Undaunted.mp3", 8, "/graphics/Characters/Golem.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png","/music/11_The Cannery.mp3", 9, "/graphics/Characters/Witch.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Village.png","/music/12_Thatched Villagers.mp3", 10, "/graphics/Characters/CatLady.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png","/music/13_Spazzmatica Polka.mp3", 11, "/graphics/Characters/Beggar.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png","/music/10_Undaunted.wav", 8, SceneType.STORY, "/graphics/Characters/Golem.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png","/music/11_The Cannery.wav", 9, SceneType.STORY, "/graphics/Characters/Witch.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Village.png","/music/12_Thatched Villagers.wav", 10, SceneType.STORY, "/graphics/Characters/CatLady.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png","/music/13_Spazzmatica Polka.wav", 11, SceneType.STORY, "/graphics/Characters/Beggar.png", 4));
 		// ending scene
-		scenes.add(new Scene("/graphics/Backgrounds/Castle.png","/music/14_Truth of the Legend.mp3", 12));
+		scenes.add(new Scene("/graphics/Backgrounds/Castle.png","/music/14_Truth of the Legend.wav", 12, SceneType.ENDING));
 		
 		
 		this.addMouseListener(new ChangeSceneListener());
@@ -132,10 +134,12 @@ public class GameGUI extends JPanel{
 		} catch (InterruptedException e) {
 			return;
 		}
-		
+		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 	}
 	
 	public void changeScene(Player mainPlayer){
+		clip.stop();
+		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
 		if (currentSceneNum == scenes.size()-1){
@@ -147,6 +151,9 @@ public class GameGUI extends JPanel{
 		
 		if (currentSceneNum == 2)
 			dialogueType = 2;
+		
+		if (scenes.get(currentSceneNum).sceneType == SceneType.ENDING)
+			dialogueType = 1;
 
 		
 		
@@ -158,30 +165,6 @@ public class GameGUI extends JPanel{
 	public void paintComponent(Graphics g){
 		// draw the current scene
 		scenes.get(currentSceneNum).draw(g);
-		
-		// play the music for the current scene
-		/*String soundName = scenes.get(currentSceneNum).getMusicFile();    
-		AudioInputStream audioInputStream = null;
-		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-		} catch (UnsupportedAudioFileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Clip clip = null;
-		try {
-			clip = AudioSystem.getClip();
-		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			clip.open(audioInputStream);
-		} catch (LineUnavailableException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		clip.start();*/
 		
 		// draw the title menu if the title screen is open
 		if(currentSceneNum == 0) {
@@ -219,6 +202,7 @@ public class GameGUI extends JPanel{
 				// New game button, will just change to next scene
 				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (439 - 80) && e.getY() < (493 - 80)) {
 					changeScene(mainPlayer);
+					dialogueType = 1;
 				}
 				// Continue button, will read from a text file and set scene and coins based on information read
 				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (543 - 80) && e.getY() < (596 - 80)) {
@@ -228,12 +212,12 @@ public class GameGUI extends JPanel{
 			
 			
 			// Click through dialogue
-			//if (dialogueType == 1){
-				
-			//}
+			if (dialogueType == 1){
+				changeScene(mainPlayer);
+			}
 			
 			// Dialogue Buttons
-			if (dialogueType == 2){
+			else if (dialogueType == 2){
 				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
@@ -287,19 +271,19 @@ public class GameGUI extends JPanel{
 	public ArrayList<Fraction> generate(int difficulty) {
 		
 		
-		if (currentSceneNum == 1 || currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4)
+		if (currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4 || currentSceneNum == 5)
 		{
 			currentQuestion = new MatchingQuestion(); 
 			 q = currentQuestion.generateQuestion(difficulty); 
 		}
-		else if (currentSceneNum == 5 || currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8)
+		else if (currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8 || currentSceneNum == 9)
 		{
 			currentQuestion = new AdditionQuestion();
 			 q = currentQuestion.generateQuestion(difficulty); 
 			 additionFraction = ((AdditionQuestion) currentQuestion).getAdditionFraction();
 		} 
 		
-		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
+		else if (currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12 || currentSceneNum == 13)
 		{
 			currentQuestion = new MultiplicationQuestion();
 			q = currentQuestion.generateQuestion(difficulty); 
@@ -333,51 +317,52 @@ public class GameGUI extends JPanel{
 	public void draw(Graphics g) {
 		boolean foundAnswer = false; 
 		ArrayList options = new ArrayList<Fraction>();
-		options = generate(scenes.get(currentSceneNum).getDifficulty()); // Make sure to change according to scene 
+		if (scenes.get(currentSceneNum).sceneType == SceneType.STORY) {
+			options = generate(scenes.get(currentSceneNum).getDifficulty()); // Make sure to change according to scene 
 
-		Random randy = new Random();
-		int random = randy.nextInt(3);
-		if (random == 0 && foundAnswer == false)
-		{
-			position = 1; 
-			foundAnswer = true; 
-		}
-		drawString(g, options.get(random).toString() , 650, 510);
-		options.remove(random); 
-		random = randy.nextInt(2);
-		if (random == 0 && foundAnswer == false)
-		{
-			position = 0; 
-			foundAnswer = true; 
-		}
-		drawString(g, options.get(random).toString() , 300, 510);
-		options.remove(random); 
-		random = randy.nextInt(1);
-		if (random == 0 && foundAnswer == false)
-		{
-			position = 2; 
-			foundAnswer = true; 
+			Random randy = new Random();
+			int random = randy.nextInt(3);
+			if (random == 0 && foundAnswer == false) {
+				position = 1;
+				foundAnswer = true;
+			}
+			drawString(g, options.get(random).toString(), 650, 510);
+			options.remove(random);
+			random = randy.nextInt(2);
+			if (random == 0 && foundAnswer == false) {
+				position = 0;
+				foundAnswer = true;
+			}
+			drawString(g, options.get(random).toString(), 300, 510);
+			options.remove(random);
+			random = randy.nextInt(1);
+			if (random == 0 && foundAnswer == false) {
+				position = 2;
+				foundAnswer = true;
+			}
+			
+			// Draw the options over the buttons
+			drawString(g, options.get(random).toString() , 985, 510);
 		}
 		
 		
-		if (currentSceneNum == 1 || currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4)
+		if (currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4 || currentSceneNum == 5)
 		{
 			drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
 		}
-		else if (currentSceneNum == 5 || currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8)
+		else if (currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8 || currentSceneNum == 9)
 		{
 			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + additionFraction.toString() + "What fraction are blue?"  , 400, 400);
 		}
-		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
+		else if (currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12 || currentSceneNum == 13)
 		{
 			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + currentQuestion.getQuestionFraction() + "What fraction are blue?"  , 400, 400);
 		}
 
 		
-	
-		
-		drawString(g, options.get(random).toString() , 985, 510);
-		drawString(g, "" + mainPlayer.getCoins() +"" , 1210, 18);
+		// Draw the coins in the coin box
+		if (scenes.get(currentSceneNum).sceneType != SceneType.TITLE)
+			drawString(g, "" + mainPlayer.getCoins() +"" , 1210, 18);
 	}
 	
 	// function to allow newlines to be used in a drawString function that also adds a border to the text
@@ -393,6 +378,18 @@ public class GameGUI extends JPanel{
 		}
 	}
 	
+	public void playSound(String musicFile){
+		// play the music for the current scene
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(musicFile));
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception e) {
+
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Image Play");
@@ -403,6 +400,7 @@ public class GameGUI extends JPanel{
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
+	
 	
 }
 
