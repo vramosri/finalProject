@@ -119,37 +119,37 @@ public class initialTests {
 		//Tests that matching questions generate correct answers.
 		for(int i = 0; i < 100; i++){
 			testQuestion1.generateQuestion(1);
-			testQuestion1.generateAnswer(1);
+			Fraction f = testQuestion1.generateAnswer(1);
 			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
 			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+			assertTrue(testQuestion1.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion1.generateQuestion(2);
-			testQuestion1.generateAnswer(2);
+			Fraction f = testQuestion1.generateAnswer(2);
 			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
 			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+			assertTrue(testQuestion1.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion1.generateQuestion(3);
-			testQuestion1.generateAnswer(3);
+			Fraction f = testQuestion1.generateAnswer(3);
 			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
 			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+			assertTrue(testQuestion1.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion1.generateQuestion(4);
-			testQuestion1.generateAnswer(4);
+			Fraction f = testQuestion1.generateAnswer(4);
 			//System.out.println("Generated Question: " + testQuestion1.getQuestionFraction().getNumerator() + "/" + testQuestion1.getQuestionFraction().getDenominator());
 			//System.out.println("Generated Answer: " + testQuestion1.getCorrectAnswer().getNumerator() + "/" + testQuestion1.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion1.checkAnswer(testQuestion1.getCorrectAnswer()));
+			assertTrue(testQuestion1.checkAnswer(f));
 		}
 	}
 
 	@Test
 	public void testMatchingOptionGeneration() {
-		//Tests that equal fractions are equal
+		//Tests matching questions generate incorrect options.
 		for(int i = 0; i< 100; i++){
 			testQuestion1.generateQuestion(1);
 			Fraction answer = testQuestion1.generateAnswer(1);
@@ -208,31 +208,56 @@ public class initialTests {
 		//Tests that addition questions generate correct answers.
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(1);
-			testQuestion2.generateAnswer(1);
+			Fraction f = testQuestion2.generateAnswer(1);
 			//System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
 			//System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion2.checkAnswer(testQuestion2.getCorrectAnswer()));
+			assertTrue(testQuestion2.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(2);
-			testQuestion2.generateAnswer(2);
-			//System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
-			//System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion2.checkAnswer(testQuestion2.getCorrectAnswer()));
+			Fraction f = testQuestion2.generateAnswer(2);
+			System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
+			System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion2.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(3);
-			testQuestion2.generateAnswer(3);
+			Fraction f = testQuestion2.generateAnswer(3);
 			System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
 			System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion2.checkAnswer(testQuestion2.getCorrectAnswer()));
+			assertTrue(testQuestion2.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(4);
-			testQuestion2.generateAnswer(4);
-			//System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
-			//System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
-			assertTrue(testQuestion2.checkAnswer(testQuestion2.getCorrectAnswer()));
+			Fraction f = testQuestion2.generateAnswer(4);
+			System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
+			System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
+			assertTrue(testQuestion2.checkAnswer(f));
+		}
+	}
+	
+	@Test
+	public void testAdditionOptionGeneration() {
+		//Tests that addition questions generate incorrect options.
+		for(int i = 0; i< 100; i++){
+			testQuestion2.generateQuestion(1);
+			Fraction answer = testQuestion2.generateAnswer(1);
+			assertFalse(testQuestion2.generateOption(1).checkEquals(testQuestion2.getCorrectAnswer()));
+		}
+		for(int i = 0; i< 100; i++){
+			testQuestion2.generateQuestion(2);
+			Fraction answer = testQuestion2.generateAnswer(2);
+			assertFalse(testQuestion2.generateOption(2).checkEquals(testQuestion2.getCorrectAnswer()));
+		}
+		for(int i = 0; i< 100; i++){
+			testQuestion2.generateQuestion(3);
+			Fraction answer = testQuestion2.generateAnswer(3);
+			assertFalse(testQuestion2.generateOption(4).checkEquals(testQuestion2.getCorrectAnswer()));
+		}
+		for(int i = 0; i< 100; i++){
+			testQuestion2.generateQuestion(4);
+			Fraction answer = testQuestion2.generateAnswer(4);
+			assertFalse(testQuestion2.generateOption(4).checkEquals(testQuestion2.getCorrectAnswer()));
 		}
 	}
 }
