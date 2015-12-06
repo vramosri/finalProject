@@ -98,8 +98,9 @@ public class AdditionQuestion extends Question {
 		case 3:
 			numerator = (questionFraction.getNumerator() * additionFraction.getDenominator()) + (additionFraction.getNumerator() * questionFraction.getDenominator());
 			denominator = questionFraction.getDenominator() * additionFraction.getDenominator();
-			while(numerator % 2 == 0){
-				
+			while(numerator % 2 == 0 && denominator % 2 == 0){
+				numerator = numerator / 2;
+				denominator = denominator / 2;
 			}
 			break;
 		case 4:
@@ -111,6 +112,38 @@ public class AdditionQuestion extends Question {
 		correctAnswer = new Fraction(numerator, denominator);
 		return correctAnswer;
 
+	}
+	
+	public Fraction generateOption(int difficulty) {
+		int num;
+		int den;
+
+		Random randy = new Random();
+		int random = randy.nextInt(5);
+
+		num = correctAnswer.getNumerator();
+		den = correctAnswer.getDenominator();
+		switch (random) {
+		case 0:
+			num--;
+			break;
+		case 1:
+			num++;
+			break;
+		case 2:
+			num = num / 2;
+			break;
+		case 3:
+			num = num * 2;
+			break;
+		case 4:
+			num++;
+			break;
+		default:
+			break;
+		}
+
+		return new Fraction(num, den);
 	}
 
 	@Override
@@ -124,12 +157,6 @@ public class AdditionQuestion extends Question {
 	
 	public int getCoinValue(){
 		return coinValue;
-	}
-
-	@Override
-	public Fraction generateOption(int difficulty) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }
