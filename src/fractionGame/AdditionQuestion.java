@@ -7,6 +7,9 @@ public class AdditionQuestion extends Question {
 	private Fraction additionFraction;
 	
 	public AdditionQuestion(){
+		//Addition Question has a starting value of 20 coins.
+		//The player will receive 20 coins for getting a question right on their first try, 
+		//10 coins on their second, and no coins after that.
 		this.coinValue = 20;
 		this.coins = this.coinValue;
 	}

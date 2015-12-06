@@ -7,6 +7,9 @@ public class MultiplicationQuestion extends Question {
 	private Fraction multFraction;
 	
 	public MultiplicationQuestion(){
+		//Multiplication Question has a starting value of 30 coins.
+		//The player will receive 30 coins for getting a question right on their first try, 
+		//15 coins on their second, and no coins after that.
 		this.coinValue = 30;
 		this.coins = this.coinValue;
 	}
