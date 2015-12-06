@@ -140,11 +140,15 @@ public class GameGUI extends JPanel{
 		else
 			currentSceneNum++;
 		
+		//testing
 		if (currentSceneNum == 2)
 			dialogueType = 2;
 		
 		if (scenes.get(currentSceneNum).sceneType == SceneType.ENDING)
 			dialogueType = 1;
+		//testing
+		
+		// when scene changes, the dialogue type will be set to 1
 
 		
 		
@@ -204,6 +208,9 @@ public class GameGUI extends JPanel{
 			
 			// Click through dialogue
 			if (dialogueType == 1){
+				//After clicking through dialogue, dialogue type will be set to 2 and repaint which will display question and buttons
+				
+				//testing
 				changeScene(mainPlayer);
 			}
 			
@@ -213,6 +220,7 @@ public class GameGUI extends JPanel{
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
 					changeScene(mainPlayer);
+					// instead of changing scenes, dialogue type will be set to 3 for conclusion dialogue and repaint
 					
 				}
 				else if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
@@ -243,6 +251,7 @@ public class GameGUI extends JPanel{
 			
 			// Click through the outro dialogue, will change the scene
 			//else if (dialogueType == 3){
+				// After clicking through conclusion dialogue, the scene will be changed which will automatically set dialogue type to 1
 			//	
 			//}
 		}

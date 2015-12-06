@@ -1,12 +1,74 @@
-Intro scene:
 You have always dreamed of visiting the royal palace and/ngazing upon the glory of the king's castle. However, as a/nyoung merchant you have little coin to your name.../n
 However, you do possess many valuable wares. You decide/nto set off for the castle and help those you find along/nthe way in hopes of reaching your dream. 
 
 
-Intro for mermaid:  
-If @ of my @ seashells are red, what fraction of all my seashells is red?
-Resolved: Bye
-Intro for Witch: 
-I need help mixing a potion. The recipe says to multiply @ of phoenix feather by @. What fraction of a phoenix feather do I have now? 
-Resolved: Bye
+intro text for dwarf goes here
+text @ text @ text
+invalid text goes here
+conclusion text for dwarf goes here @ coins
 
+
+intro text for mermaid goes here
+If @ of my @ seashells are red, what fraction of all my seashells is red?
+invalid text goes here
+conclusion text for mermaid goes here @ coins
+
+
+intro text for traveler goes here
+text @ text @ text
+invalid text goes here
+conclusion text for traveler goes here @ coins
+
+
+intro text for scavenger cat goes here
+text @ text @ text
+invalid text goes here
+conclusion text for scavenger cat goes here @ coins
+
+
+intro text for elf goes here x
+text @ text @ text
+invalid text goes here
+conclusion text for elf goes here @ coins
+
+
+intro text for otter goes here
+text @ text @ text
+invalid text goes here
+conclusion text for otter goes here @ coins
+
+
+intro text for goblin goes here x
+text @ text @ text
+invalid text goes here
+conclusion text for goblin goes here @ coins
+
+
+I have heard stories of a human wandering the lands, helping people in need./nWell, you have made it this far human, are you seeking a taste of a dragon's treasure?
+If @ of my precious gems are emeralds and I bring home a chest filled with/ntreasure, @ of which are sparkly emeralds, how much of my hoard will be green?
+Huff! That's not the right amount, click to try again, human.
+Thank you kindly, human, to reward you for increasing my knowledge I shall give you @ coins.
+
+
+intro text for golem goes here x
+text @ text @ text
+invalid text goes here
+conclusion text for golem goes here @ coins
+
+
+Intro text for witch goes here 
+I need help mixing a potion. The recipe says I need @ of phoenix feather,/nbut I need @ potions. What fraction of a phoenix feather do I need? 
+invalid text goes here
+conclusion text for witch goes here @ coins
+
+
+intro text for cat lady goes here
+text @ text @ text
+invalid text goes here
+conclusion text for cat lady goes here @ coins
+
+
+intro text for beggar goes here
+text @ text @ text
+invalid text goes here
+conclusion text for beggar goes here @ coins
