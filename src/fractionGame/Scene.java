@@ -26,10 +26,13 @@ public class Scene extends JPanel{
 	private Image progress;
 	private MediaTracker tracker;
 	
-	public Scene(String backgroundFile, String musicFile, int sceneNum) {
+	public SceneType sceneType;
+	
+	public Scene(String backgroundFile, String musicFile, int sceneNum, SceneType sceneType) {
 		this.backgroundFile = backgroundFile;
 		this.musicFile = musicFile;
 		this.sceneNum = sceneNum;
+		this.sceneType = sceneType;
 		
 		tracker = new MediaTracker(this);
 		background = getImage(backgroundFile);
@@ -43,8 +46,8 @@ public class Scene extends JPanel{
 		}
 	}
 	
-	public Scene(String backgroundFile, String musicFile, int sceneNum, String characterFile, int difficulty) {
-		this(backgroundFile, musicFile, sceneNum);
+	public Scene(String backgroundFile, String musicFile, int sceneNum, SceneType sceneType, String characterFile, int difficulty) {
+		this(backgroundFile, musicFile, sceneNum, sceneType);
 		this.characterFile = characterFile;
 		this.difficulty = difficulty;
 		
