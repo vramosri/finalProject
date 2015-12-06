@@ -53,7 +53,7 @@ public class GameGUI extends JPanel{
 	private Question currentQuestion;
 	Cursor inactiveCursor;
 	Cursor activeCursor;
-
+	private Fraction additionFraction; 
 	int currentSceneNum;
 	int dialogueType;
 
@@ -267,9 +267,30 @@ public class GameGUI extends JPanel{
 	}
 	
 
+
 	public ArrayList<Fraction> generate(int difficulty) {
-		 currentQuestion = new MatchingQuestion(); 
-		 q = currentQuestion.generateQuestion(difficulty); 
+		
+		
+		if (currentSceneNum == 1 || currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4)
+		{
+			currentQuestion = new MatchingQuestion(); 
+			 q = currentQuestion.generateQuestion(difficulty); 
+		}
+		else if (currentSceneNum == 5 || currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8)
+		{
+			currentQuestion = new AdditionQuestion();
+			 q = currentQuestion.generateQuestion(difficulty); 
+			 additionFraction = ((AdditionQuestion) currentQuestion).getAdditionFraction();
+		} 
+		
+		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
+		{
+			currentQuestion = new MultiplicationQuestion();
+			q = currentQuestion.generateQuestion(difficulty); 
+		}
+		
+	
+		
 		 answer = currentQuestion.generateAnswer(difficulty); 
 		 option1 = currentQuestion.generateOption(difficulty); 
 		 option2 = currentQuestion.generateOption(difficulty); 
@@ -289,12 +310,9 @@ public class GameGUI extends JPanel{
 				option2 = currentQuestion.generateOption(difficulty); 
 			}
 			}
-			System.out.println("Option 1: " + option1);
-			System.out.println("Option 2: " + option2);
 			return options; 
 			
 	}
-	
 	
 	public void draw(Graphics g) {
 		boolean foundAnswer = false; 
@@ -324,8 +342,25 @@ public class GameGUI extends JPanel{
 			position = 2; 
 			foundAnswer = true; 
 		}
+		
+		
+		if (currentSceneNum == 1 || currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4)
+		{
+			drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
+		}
+		else if (currentSceneNum == 5 || currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8)
+		{
+			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + additionFraction.toString() + "What fraction are blue?"  , 400, 400);
+		}
+		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
+		{
+			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + currentQuestion.getQuestionFraction() + "What fraction are blue?"  , 400, 400);
+		}
+
+		
+	
+		
 		drawString(g, options.get(random).toString() , 985, 510);
-		drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
 		drawString(g, "" + mainPlayer.getCoins() +"" , 1210, 18);
 	}
 	
