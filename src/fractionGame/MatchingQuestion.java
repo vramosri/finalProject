@@ -5,6 +5,9 @@ import java.util.Random;
 public class MatchingQuestion extends Question {
 	
 	public MatchingQuestion(){
+		//Matching Question has a starting value of 10 coins.
+		//The player will receive 10 coins for getting a question right on their first try, 
+		//5 coins on their second, and no coins after that.
 		this.coinValue = 10;
 		this.coins = this.coinValue;
 	}
@@ -14,8 +17,10 @@ public class MatchingQuestion extends Question {
 		int numerator = 0;
 		int denominator = 0;
 		Random r = new Random();
+		//The random fraction generated to be used in the question is dependent on the difficulty level.
 		switch(difficulty){
 		case 1:
+			//Difficulty Level 1 will generate even denominator fractions with a maximum denominator of 4.
 			while ((denominator == 0) || (denominator % 2 == 1)) {
 				denominator = r.nextInt(difficulty * 4) + 1; 
 			}
@@ -24,6 +29,7 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		case 2:
+			//Difficulty Level 2 will generate fractions with a denominator between 4 and 8 inclusive.
 			while ((denominator == 0) || (denominator < 4)) {
 				denominator = r.nextInt(difficulty * 4 + 1);
 			}
@@ -32,6 +38,7 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		case 3:
+			//Difficulty Level 3 will generate even denominator questions with a denominator between 8 and 12 inclusive.
 			while ((denominator == 0) || (denominator % 2 == 1) || (denominator < 8)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
@@ -40,6 +47,7 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		case 4:
+			//Difficulty Level 4 will generate fractions with a denominator between 10 and 16 inclusive.
 			while ((denominator == 0) || (denominator < 10)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
@@ -48,6 +56,7 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		}
+		//questionFraction is the Fraction given to the text display in order to display the problem.
 		questionFraction = new Fraction(numerator, denominator); 
 		return questionFraction;
 	}
@@ -56,8 +65,10 @@ public class MatchingQuestion extends Question {
 		int numerator = 0;
 		int denominator = 0;
 		Random r = new Random();
+		//An answer is generated based on the random fraction from the previous function, as well as the difficulty.
 		switch(difficulty){
 		case 1:
+			//Difficulty level 1 and 2 both generate a fraction equivalent to the question fraction.
 			if((questionFraction.getNumerator() % 2 == 0) && (questionFraction.getDenominator() % 2 == 0)){
 				numerator = questionFraction.getNumerator() / 2;
 				denominator = questionFraction.getDenominator() / 2;
@@ -78,6 +89,7 @@ public class MatchingQuestion extends Question {
 			}
 			break;
 		case 3:
+			//Difficulty level 3 and 4 generate some answer greater than the question fraction (even mixed fractions with a value > 1)
 			denominator = 1;
 			while(((double) numerator / denominator <= (double) questionFraction.getNumerator() / questionFraction.getDenominator())){
 				numerator = (questionFraction.getNumerator() + r.nextInt(difficulty));
