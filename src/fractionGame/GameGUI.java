@@ -253,13 +253,13 @@ public class GameGUI extends JPanel{
 			 q = currentQuestion.generateQuestion(difficulty); 
 			 additionFraction = ((AdditionQuestion) currentQuestion).getAdditionFraction();
 		} 
-		/*
+		
 		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
 		{
 			currentQuestion = new MultiplicationQuestion();
 			q = currentQuestion.generateQuestion(difficulty); 
 		}
-		*/ 
+		
 	
 		
 		 answer = currentQuestion.generateAnswer(difficulty); 
@@ -323,12 +323,11 @@ public class GameGUI extends JPanel{
 		{
 			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + additionFraction.toString() + "What fraction are blue?"  , 400, 400);
 		}
-		/*
 		else if (currentSceneNum == 9 || currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12)
 		{
-			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
+			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + currentQuestion.getQuestionFraction() + "What fraction are blue?"  , 400, 400);
 		}
-		*/
+
 		
 	
 		
