@@ -22,7 +22,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,6 +39,8 @@ import javax.swing.JPanel;
 public class GameGUI extends JPanel{
 	private ArrayList<Scene> scenes;
 	Player mainPlayer;
+	private AudioInputStream audioInputStream;
+	private Clip clip;
 	
 	private Image textBox;
 	private Image coinBox;
@@ -88,26 +95,26 @@ public class GameGUI extends JPanel{
 		
 		// create the scenes
 		// title scene
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.mp3", 0, SceneType.TITLE));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.wav", 0, SceneType.TITLE));
 		// intro scene
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.mp3", 0, SceneType.INTRO));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/1_Adventure Meme.wav", 0, SceneType.INTRO));
 		// game scenes
-		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/2_Local Forecast.mp3", 0, SceneType.STORY, "/graphics/Characters/Dwarf.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Beach.png","/music/3_Pamgaea.pm3", 1, SceneType.STORY, "/graphics/Characters/Mermaid.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png","/music/4_One-Eyed Maestro.mp3", 2, SceneType.STORY, "/graphics/Characters/Traveller.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Ruins.png","/music/5_Sneaky Snitch.mp3", 3, SceneType.STORY, "/graphics/Characters/ScavengerCat.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills1.png","/music/2_Local Forecast.wav", 0, SceneType.STORY, "/graphics/Characters/Dwarf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Beach.png","/music/3_Pamgaea.wav", 1, SceneType.STORY, "/graphics/Characters/Mermaid.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills2.png","/music/4_One-Eyed Maestro.wav", 2, SceneType.STORY, "/graphics/Characters/Traveller.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Ruins.png","/music/5_Sneaky Snitch.wav", 3, SceneType.STORY, "/graphics/Characters/ScavengerCat.png", 4));
 		
-		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png","/music/6_Run Amok.mp3", 4, SceneType.STORY, "/graphics/Characters/Elf.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png","/music/7_Meatball Parade.mp3", 5, SceneType.STORY, "/graphics/Characters/Otter.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Cave.png","/music/8_Scheming Weasel faster.mp3", 6, SceneType.STORY, "/graphics/Characters/Goblin.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png","/music/9_Five Armies.mp3", 7, SceneType.STORY, "/graphics/Characters/Dragon.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest1.png","/music/6_Run Amok.wav", 4, SceneType.STORY, "/graphics/Characters/Elf.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest2.png","/music/7_Meatball Parade.wav", 5, SceneType.STORY, "/graphics/Characters/Otter.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Cave.png","/music/8_Scheming Weasel faster.wav", 6, SceneType.STORY, "/graphics/Characters/Goblin.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPeak.png","/music/9_Five Armies.wav", 7, SceneType.STORY, "/graphics/Characters/Dragon.png", 4));
 		
-		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png","/music/10_Undaunted.mp3", 8, SceneType.STORY, "/graphics/Characters/Golem.png", 1));
-		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png","/music/11_The Cannery.mp3", 9, SceneType.STORY, "/graphics/Characters/Witch.png", 2));
-		scenes.add(new Scene("/graphics/Backgrounds/Village.png","/music/12_Thatched Villagers.mp3", 10, SceneType.STORY, "/graphics/Characters/CatLady.png", 3));
-		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png","/music/13_Spazzmatica Polka.mp3", 11, SceneType.STORY, "/graphics/Characters/Beggar.png", 4));
+		scenes.add(new Scene("/graphics/Backgrounds/MountainPass.png","/music/10_Undaunted.wav", 8, SceneType.STORY, "/graphics/Characters/Golem.png", 1));
+		scenes.add(new Scene("/graphics/Backgrounds/Forest3.png","/music/11_The Cannery.wav", 9, SceneType.STORY, "/graphics/Characters/Witch.png", 2));
+		scenes.add(new Scene("/graphics/Backgrounds/Village.png","/music/12_Thatched Villagers.wav", 10, SceneType.STORY, "/graphics/Characters/CatLady.png", 3));
+		scenes.add(new Scene("/graphics/Backgrounds/Hills3.png","/music/13_Spazzmatica Polka.wav", 11, SceneType.STORY, "/graphics/Characters/Beggar.png", 4));
 		// ending scene
-		scenes.add(new Scene("/graphics/Backgrounds/Castle.png","/music/14_Truth of the Legend.mp3", 12, SceneType.ENDING));
+		scenes.add(new Scene("/graphics/Backgrounds/Castle.png","/music/14_Truth of the Legend.wav", 12, SceneType.ENDING));
 		
 		
 		this.addMouseListener(new ChangeSceneListener());
@@ -127,10 +134,12 @@ public class GameGUI extends JPanel{
 		} catch (InterruptedException e) {
 			return;
 		}
-		
+		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 	}
 	
 	public void changeScene(Player mainPlayer){
+		clip.stop();
+		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
 		if (currentSceneNum == scenes.size()-1){
@@ -378,6 +387,18 @@ public class GameGUI extends JPanel{
 		}
 	}
 	
+	public void playSound(String musicFile){
+		// play the music for the current scene
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(musicFile));
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception e) {
+
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Image Play");
@@ -388,6 +409,7 @@ public class GameGUI extends JPanel{
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
+	
 	
 }
 

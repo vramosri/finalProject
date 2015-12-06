@@ -17,28 +17,61 @@ public class MultiplicationQuestion extends Question {
 		int numerator = 0;
 		int denominator = 0;
 		Random r = new Random();
-		difficulty+=2;
 		
-		while(denominator <= 0 || multFraction.getDenominator() <= 0){
-			int randMult = 1;
-			while(randMult < 2){
-				randMult = r.nextInt(difficulty);
-			}
+		switch(difficulty){
+		case 1:
+			int randMult = r.nextInt(3)+1;
+			multFraction.setNumerator(randMult);
+			multFraction.setDenominator(randMult);
 			
-			int randNum = r.nextInt(difficulty*randMult);
-			multFraction.setDenominator(randNum);
+			while(denominator <= 1)
+				denominator = r.nextInt(5);
+			while(numerator <= 0)
+				numerator = r.nextInt(denominator);
+			break;
+		case 2:
+			while(denominator <= 1)
+				denominator = r.nextInt(5);
+			while(numerator <= 0)
+				numerator = r.nextInt(denominator);
 			
-			randNum =  r.nextInt(difficulty*randMult);
-			denominator = randNum;
+			
+				multFraction.setDenominator(r.nextInt(3)+1);
+			
+				multFraction.setNumerator(multFraction.getDenominator()*(r.nextInt(3)+1));
+			break;
+		case 3:
+			while(denominator <= 2)
+				denominator = r.nextInt(5);
+			while(numerator <= 1)
+				numerator = r.nextInt(denominator);
+			
+			while(multFraction.getDenominator() <= 1)
+				multFraction.setDenominator(r.nextInt(5));
+			while(multFraction.getNumerator() <= 0)
+				multFraction.setNumerator(r.nextInt(multFraction.getDenominator()));
+			break;
+		case 4:
+			while(denominator <= 3)
+				denominator = r.nextInt(7);
+			while(numerator <= 1)
+				numerator = r.nextInt(denominator);
+			
+			while(multFraction.getDenominator() <= 3)
+				multFraction.setDenominator(r.nextInt(7));
+			while(multFraction.getNumerator() <= 1)
+				multFraction.setNumerator(r.nextInt(multFraction.getDenominator()));
+			break;
+		default:
+			break;
 		}
-		
-		numerator = r.nextInt(denominator);
-		multFraction.setNumerator(r.nextInt(multFraction.getDenominator()));
-		
 		questionFraction = new Fraction(numerator, denominator);
-		
+
 		correctAnswer = new Fraction(numerator*multFraction.getNumerator(),denominator*multFraction.getDenominator());
+		System.out.println(questionFraction);
+		System.out.println(multFraction);
 		
+		System.out.println(correctAnswer);
 		return multFraction;
 		
 	}
@@ -60,49 +93,71 @@ public class MultiplicationQuestion extends Question {
 	public Fraction generateOption(int difficulty) {
 		int numerator = 0;
 		int denominator = 0;
-		Random r = new Random();
-		difficulty+=2;
-		
-		while(denominator <= 0){
-			int randMult = 1;
-			while(randMult < 2){
-				randMult = r.nextInt(difficulty);
-			}
-			
-			int randNum = r.nextInt(difficulty*randMult);
-			denominator = randNum;
-			
-		}
-		numerator = r.nextInt(denominator);
-		
 		int numerator2 = 0;
 		int denominator2 = 0;
-		
-		while(denominator2 <= 0){
-			int randMult = 1;
-			while(randMult < 2){
-				randMult = r.nextInt(difficulty);
-			}
+		Random r = new Random();
+	
+		switch(difficulty){
+		case 1:
+			int randMult = r.nextInt(3)+1;
+			numerator2 =randMult;
+			denominator2 =randMult;
 			
-			int randNum = r.nextInt(difficulty*randMult);
-			denominator2 = randNum;
+			while(denominator <= 1)
+				denominator = r.nextInt(5);
+			while(numerator <= 0)
+				numerator = r.nextInt(denominator);
+			break;
+		case 2:
+			while(denominator <= 1)
+				denominator = r.nextInt(5);
+			while(numerator <= 0)
+				numerator = r.nextInt(denominator);
 			
+			
+				denominator2 =r.nextInt(3)+1;
+			
+				numerator2 =denominator2*(r.nextInt(3)+1);
+			break;
+		case 3:
+			while(denominator <= 2)
+				denominator = r.nextInt(5);
+			while(numerator <= 1)
+				numerator = r.nextInt(denominator);
+			
+			while(denominator2 <= 1)
+				denominator2 =r.nextInt(5);
+			while(numerator2 <= 0)
+				numerator2 =r.nextInt(denominator2);
+			break;
+		case 4:
+			while(denominator <= 3)
+				denominator = r.nextInt(7);
+			while(numerator <= 1)
+				numerator = r.nextInt(denominator);
+			
+			while(denominator2 <= 3)
+				denominator2 =r.nextInt(7);
+			while(numerator2 <= 1)
+				numerator2 =r.nextInt(denominator2);
+			break;
+		default:
+			break;
 		}
-		numerator2 = r.nextInt(denominator2);
 		
 		Fraction tFrac = new Fraction(numerator*numerator2, denominator*denominator2);
 		if(tFrac.checkEquals(correctAnswer)){
 			tFrac = generateOption( difficulty);
 		}
 		
-		
+		System.out.println(tFrac);
 		return tFrac;
 	}
 	
 	public static void main(String[] args){
 		MultiplicationQuestion  t = new MultiplicationQuestion();
-		t.generateQuestion(2);
-		t.generateOption(2);
+		t.generateQuestion(4);
+		t.generateOption(4);
 	}
 
 }

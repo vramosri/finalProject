@@ -85,14 +85,6 @@ public class initialTests {
 	}
 	
 	@Test
-	public void testProgressBar(){
-		//Tests that the progress bar correctly keeps track of player's progress.
-		assertEquals(testBar.getProgress(), 0);
-		testGame.changeScene(testPlayer);
-		assertEquals(testBar.getProgress(), 1);
-	}
-	
-	@Test
 	public void testMatchingQuestionGeneration(){
 		//Tests that random matching questions are generated correctly.
 		Fraction f = new Fraction(1, 1);
@@ -216,15 +208,15 @@ public class initialTests {
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(2);
 			Fraction f = testQuestion2.generateAnswer(2);
-			System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
-			System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
+			//System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
+			//System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
 			assertTrue(testQuestion2.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
 			testQuestion2.generateQuestion(3);
 			Fraction f = testQuestion2.generateAnswer(3);
-			System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
-			System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
+			//System.out.println("Generated Question: " + testQuestion2.getQuestionFraction().getNumerator() + "/" + testQuestion2.getQuestionFraction().getDenominator() + "+" + testQuestion2.getAdditionFraction().getNumerator() + "/" + testQuestion2.getAdditionFraction().getDenominator());
+			//System.out.println("Generated Answer: " + testQuestion2.getCorrectAnswer().getNumerator() + "/" + testQuestion2.getCorrectAnswer().getDenominator() + "\n");
 			assertTrue(testQuestion2.checkAnswer(f));
 		}
 		for(int i = 0; i < 100; i++){
