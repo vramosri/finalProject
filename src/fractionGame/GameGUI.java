@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 import java.io.File;
+import java.io.FileReader;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -58,6 +61,12 @@ public class GameGUI extends JPanel{
 	private Fraction additionFraction; 
 	int currentSceneNum;
 	int dialogueType;
+	private ArrayList<String> titleDialog = new ArrayList<>();
+	private ArrayList<String> introDialog = new ArrayList<>();
+	private ArrayList<String> questionDialog  = new ArrayList<>();
+	private ArrayList<String> wrongDialog  = new ArrayList<>();
+	private ArrayList<String> solvedDialog  = new ArrayList<>();
+	
 
 	int position = -1; 
 	
@@ -71,6 +80,7 @@ public class GameGUI extends JPanel{
 				new Point(0,0), "custom cursor");
 		
 		setCursor(inactiveCursor);
+		loadDialog();
 		
 		// Load custom font
 		InputStream is = GameGUI.class.getResourceAsStream("/graphics/Quintessential-Regular.ttf");
@@ -136,6 +146,57 @@ public class GameGUI extends JPanel{
 		}
 		this.playSound(scenes.get(currentSceneNum).getMusicFile());
 	}
+	
+	public void loadDialog()
+	{
+		String dialogFile = "src/dialog.txt";
+		FileReader file;
+		try {
+			file = new FileReader(dialogFile);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			System.out.println();
+			return;
+		}
+		
+		// Read in the values from the file
+		Scanner scan = new Scanner(file);
+		
+		while (scan.hasNext()) {
+			String line = scan.nextLine();
+			
+			if(line.length() <= 0){
+				
+			}
+			else if (line.substring(0, 1).equals("#"))
+			{
+				titleDialog.add(line); 
+			}
+			else if(line.substring(0, 1).equals("$"))
+			{
+				introDialog.add(line); 
+			}
+			else if (line.substring(0, 1).equals("*"))
+			{
+				questionDialog.add(line); 
+			}
+			else if (line.substring(0, 1).equals("^"))
+			{
+				wrongDialog.add(line); 
+			}
+			else if (line.substring(0, 1).equals("+"))
+			{
+				solvedDialog.add(line); 
+			}
+			System.out.println(titleDialog.get(0));
+			
+		}
+
+		scan.close();
+
+	}
+	
+	
 	
 	public void changeScene(Player mainPlayer){
 		clip.stop();

@@ -1,11 +1,11 @@
-You have always dreamed of visiting the royal palace and/ngazing upon the glory of the king's castle. However, as a/nyoung merchant you have little coin to your name.../n
-However, you do possess many valuable wares. You decide/nto set off for the castle and help those you find along/nthe way in hopes of reaching your dream. 
+#You have always dreamed of visiting the royal palace and/ngazing upon the glory of the king's castle. However, as a/nyoung merchant you have little coin to your name.../n
+#However, you do possess many valuable wares. You decide/nto set off for the castle and help those you find along/nthe way in hopes of reaching your dream. 
 
 
-intro text for dwarf goes here
-text @ text @ text
-invalid text goes here
-conclusion text for dwarf goes here @ coins
+$intro text for dwarf goes here
+*text @ text @ text
+^invalid text goes here
++conclusion text for dwarf goes here @ coins
 
 
 intro text for mermaid goes here
