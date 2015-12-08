@@ -271,8 +271,12 @@ public class GameGUI extends JPanel{
 			
 			if(scenes.get(currentSceneNum).sceneType == SceneType.ENDING){
 				
-				main(null);
-				System.exit(0);
+				mainPlayer = new Player();
+				//scenes = new ArrayList<Scene>();
+				currentSceneNum = 0;
+				dialogueType = 0;
+				gotAnswer = false;
+				tempCoins = 0;
 			}
 		
 			// Title screen buttons
