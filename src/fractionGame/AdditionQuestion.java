@@ -48,13 +48,13 @@ public class AdditionQuestion extends Question {
 			}
 			break;
 		case 3:
-			while ((denominator == 0) || (denominator % 2 == 1) || (denominator > 6)) {
+			while ((denominator == 0) || (denominator % 2 == 1) || (denominator > 5)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
 			while ((numerator == 0) || (numerator >= denominator)) {
 				numerator = r.nextInt(difficulty * 4) + 1;
 			}
-			while ((adenominator == 0) || (adenominator % 2 == 1) || (adenominator > 6)) {
+			while ((adenominator == 0) || (adenominator % 2 == 1) || (adenominator > 5)) {
 				adenominator = r.nextInt(difficulty * 4) + 1;
 			}
 			while ((anumerator == 0) || (anumerator >= adenominator)) {
@@ -62,13 +62,13 @@ public class AdditionQuestion extends Question {
 			}
 			break;
 		case 4:
-			while ((denominator <= 1) || (denominator > 8)) {
+			while ((denominator <= 1) || (denominator > 6)) {
 				denominator = r.nextInt(difficulty * 4) + 1;
 			}
 			while ((numerator == 0) || (numerator >= denominator)) {
 				numerator = r.nextInt(difficulty * 4);
 			}
-			while ((adenominator <= 1) || (adenominator > 8)) {
+			while ((adenominator <= 1) || (adenominator > 6)) {
 				adenominator = r.nextInt(difficulty * 4) + 1;
 			}
 			while ((anumerator == 0) || (anumerator >= adenominator)) {

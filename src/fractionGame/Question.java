@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Question {
 	
+	//Question.java is an abstract class from which the other, implementable question types inherit methods and variables.
+	//The main purpose of Question.java is to hold variables common to each question type, and to provide the reduceCoins() function.
+	
 	private ArrayList<Fraction> answers;
 	protected Fraction questionFraction;
 	protected Fraction correctAnswer; 

@@ -250,6 +250,8 @@ public class GameGUI extends JPanel{
 	}
 	
 	public void changeScene(Player mainPlayer, int scene, int coins, int dialogue){
+		//This version of changeScene() is used exclusively when the player chooses "continue" at the title screen.
+		//Functionally it is similar to the other changeScene(), but provides the scene number, coins, and dialogue type explicitly.
 		currentSceneNum = scene;
 		mainPlayer.setCoins(coins);
 		dialogueType = dialogue;

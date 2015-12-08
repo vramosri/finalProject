@@ -15,9 +15,7 @@ public class initialTests {
 	private AdditionQuestion testQuestion2;
 	private MultiplicationQuestion testQuestion3;
 	private Player testPlayer;
-	private GameGUI testGame;
-	private ProgressBar testBar;
-	
+	private GameGUI testGame;	
 	
 	@Before
 	public void initialize(){
@@ -28,7 +26,6 @@ public class initialTests {
 		testQuestion2 = new AdditionQuestion();
 		testQuestion3 = new MultiplicationQuestion();
 		testPlayer = new Player();
-		testBar = new ProgressBar();
 	}
 
 	@Test
