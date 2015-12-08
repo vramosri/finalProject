@@ -153,10 +153,10 @@ public class GameGUI extends JPanel{
 	
 	public void loadDialog()
 	{
-		String dialogFile = "src/dialog.txt";
-		FileReader file;
+		String dialogFile = "/data/dialog.txt";
+		InputStream file;
 		try {
-			file = new FileReader(dialogFile);
+			file = getClass().getResourceAsStream(dialogFile) ;
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 			System.out.println();
@@ -298,31 +298,17 @@ public class GameGUI extends JPanel{
 
 			}
 			
-			// Click through dialogue
-			/*if (dialogueType == 1 && scenes.get(currentSceneNum).sceneType != SceneType.INTRO){
-				//After clicking through dialogue, dialogue type will be set to 2 and repaint which will display question and buttons
-				//if(scenes.get(currentSceneNum).sceneType == SceneType.INTRO){
-					//dialogueType = 3;
-				//}
-				//else
-				dialogueType = 2; 
-				repaint(); 
-			}*/
 			
 			// Dialogue Buttons
 			else if (dialogueType == 2){
 				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
 				{
-					mainPlayer.addCoins(currentQuestion.getCoins());					
-					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
+					mainPlayer.addCoins(currentQuestion.getCoins());
 					gotAnswer = true;
 					dialogueType = 1;
 					tempCoins = currentQuestion.getCoins();
-					//changeScene(mainPlayer);
 					repaint(); 
-					//dialogueType =3; 
 				
-					// instead of changing scenes, dialogue type will be set to 3 for conclusion dialogue and repaint
 					
 				}
 				else if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
@@ -330,14 +316,12 @@ public class GameGUI extends JPanel{
 					currentQuestion.reduceCoins();
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
-					drawString(getGraphics(), quote, 10, 150);
+					drawString(getGraphics(), quote, 80, 250);
 				}
 				
 				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
-					//changeScene(mainPlayer);
-					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
 					gotAnswer = true;
 					dialogueType = 1;
 					tempCoins = currentQuestion.getCoins();
@@ -349,14 +333,12 @@ public class GameGUI extends JPanel{
 					currentQuestion.reduceCoins();
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
-					drawString(getGraphics(), quote, 10, 150); //TODO: WAS 80 150
+					drawString(getGraphics(), quote, 80, 250);
 
 				}
 				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
-					//changeScene(mainPlayer);
-					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
 					gotAnswer =true;
 					dialogueType = 1;
 					tempCoins = currentQuestion.getCoins();
@@ -368,11 +350,10 @@ public class GameGUI extends JPanel{
 					currentQuestion.reduceCoins();
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
-					drawString(getGraphics(), quote, 10, 150); //TODO: was 80 150
+					drawString(getGraphics(), quote, 80, 250);
 
 				}
 				
-				System.out.println("Coins: " + mainPlayer.getCoins());
 			}	
 			else if(gotAnswer){
 				changeScene(mainPlayer);
@@ -482,7 +463,7 @@ public class GameGUI extends JPanel{
 				
 				drawString(g, options.get(random).toString() , 985, 510);
 				
-				drawString(g, introDialog.get(currentSceneNum-2).substring(1), 10, 10); //TODO: BLAH FBJWK comment out or delete to undo intro dialog
+				drawString(g, introDialog.get(currentSceneNum-2).substring(1), 80, 10);
 				
 				String[] str =questionDialog.get(currentSceneNum-2).split("@"); 
 				String quote = "";
