@@ -13,6 +13,7 @@ public class MatchingQuestion extends Question {
 	}
 	
 	public Fraction generateQuestion(int difficulty) {
+		System.out.println("blah n;ah");
 		// TODO: Make sure that the denominator is not 0 when generating random fraction
 		int numerator = 0;
 		int denominator = 0;

@@ -66,6 +66,8 @@ public class GameGUI extends JPanel{
 	private ArrayList<String> questionDialog  = new ArrayList<>();
 	private ArrayList<String> wrongDialog  = new ArrayList<>();
 	private ArrayList<String> solvedDialog  = new ArrayList<>();
+	private boolean gotAnswer;
+	private int tempCoins;
 	
 
 	int position = -1; 
@@ -89,19 +91,19 @@ public class GameGUI extends JPanel{
 			Font sizedFont = font.deriveFont(30f);
 			setFont(sizedFont);
 		} catch (FontFormatException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		
 		
 		mainPlayer = new Player();
 		scenes = new ArrayList<Scene>();
 		currentSceneNum = 0;
 		dialogueType = 0;
-		
+		gotAnswer = false;
+		tempCoins = 0;
 		
 		// create the scenes
 		// title scene
@@ -144,7 +146,9 @@ public class GameGUI extends JPanel{
 		} catch (InterruptedException e) {
 			return;
 		}
-		this.playSound(scenes.get(currentSceneNum).getMusicFile());
+		
+
+		this.playSound(scenes.get(0).getMusicFile());
 	}
 	
 	public void loadDialog()
@@ -188,7 +192,6 @@ public class GameGUI extends JPanel{
 			{
 				solvedDialog.add(line); 
 			}
-			System.out.println(titleDialog.get(0));
 			
 		}
 
@@ -201,7 +204,7 @@ public class GameGUI extends JPanel{
 	public void changeScene(Player mainPlayer){
 		clip.stop();
 		clip.close();
-		this.playSound(scenes.get(currentSceneNum).getMusicFile());
+		this.playSound(scenes.get(currentSceneNum + 1).getMusicFile());
 		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
 		
 		if (currentSceneNum == scenes.size()-1){
@@ -212,7 +215,7 @@ public class GameGUI extends JPanel{
 			currentSceneNum++;
 		
 		//testing
-		if (currentSceneNum == 2)
+		if (currentSceneNum == 1)
 			dialogueType = 2;
 		
 		if (scenes.get(currentSceneNum).sceneType == SceneType.ENDING)
@@ -238,13 +241,15 @@ public class GameGUI extends JPanel{
 			drawString(g, "New Game", 580, 348);
 			drawString(g, "Continue", 592, 453);
 		}
-		else {
+		else if (scenes.get(currentSceneNum).sceneType == SceneType.STORY){
 			g.drawImage(textBox, 0, 350, null);
 			g.drawImage(coinBox, 1064, 0, null);
 		}
+		else
+			g.drawImage(coinBox, 1064, 0, null);
 			
 		// draw the buttons if the dialogue is ready for interaction
-		if(dialogueType == 2) {
+		if(dialogueType == 2 && scenes.get(currentSceneNum).sceneType == SceneType.STORY) {
 			g.drawImage(buttonBox, 200, 520, null);
 			g.drawImage(buttonBox, 542, 520, null);
 			g.drawImage(buttonBox, 883, 520, null);
@@ -262,7 +267,14 @@ public class GameGUI extends JPanel{
 	class ChangeSceneListener implements MouseListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mouseReleased(MouseEvent e) {
+			
+			if(scenes.get(currentSceneNum).sceneType == SceneType.ENDING){
+				
+				main(null);
+				System.exit(0);
+			}
+		
 			// Title screen buttons
 			if (currentSceneNum == 0){
 				// New game button, will just change to next scene
@@ -277,53 +289,103 @@ public class GameGUI extends JPanel{
 			}
 			
 			
-			// Click through dialogue
-			if (dialogueType == 1){
+			// Intro Dialog
+			else if (dialogueType == 1 && scenes.get(currentSceneNum).sceneType == SceneType.INTRO){
 				//After clicking through dialogue, dialogue type will be set to 2 and repaint which will display question and buttons
-				
-				//testing
 				changeScene(mainPlayer);
+				dialogueType = 2;
+				repaint(); 
 			}
+			
+			// Click through dialogue
+			/*if (dialogueType == 1 && scenes.get(currentSceneNum).sceneType != SceneType.INTRO){
+				//After clicking through dialogue, dialogue type will be set to 2 and repaint which will display question and buttons
+				//if(scenes.get(currentSceneNum).sceneType == SceneType.INTRO){
+					//dialogueType = 3;
+				//}
+				//else
+				dialogueType = 2; 
+				repaint(); 
+			}*/
 			
 			// Dialogue Buttons
 			else if (dialogueType == 2){
 				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
-					changeScene(mainPlayer);
+					
+					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
+					gotAnswer = true;
+					dialogueType = 1;
+					tempCoins = currentQuestion.getCoins();
+					//changeScene(mainPlayer);
+					repaint(); 
+					//dialogueType =3; 
+				
 					// instead of changing scenes, dialogue type will be set to 3 for conclusion dialogue and repaint
 					
 				}
 				else if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56))
 				{
 					currentQuestion.reduceCoins();
+					String quote = wrongDialog.get(currentSceneNum-2);
+					quote = quote.substring(1);
+					drawString(getGraphics(), quote, 10, 150); //TODO: was 80, 150
 				}
 				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
-					changeScene(mainPlayer);
+					//changeScene(mainPlayer);
+					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
+					gotAnswer = true;
+					dialogueType = 1;
+					tempCoins = currentQuestion.getCoins();
+					repaint();
+					 
 				}
 				else if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56))
 				{
 					currentQuestion.reduceCoins();
+					String quote = wrongDialog.get(currentSceneNum-2);
+					quote = quote.substring(1);
+					drawString(getGraphics(), quote, 10, 150); //TODO: WAS 80 150
 				}
 				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
-					changeScene(mainPlayer);
+					//changeScene(mainPlayer);
+					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
+					gotAnswer =true;
+					dialogueType = 1;
+					tempCoins = currentQuestion.getCoins();
+					repaint();
+					 
 				}
-				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
+				else if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56))
 				{
 					currentQuestion.reduceCoins();
+					String quote = wrongDialog.get(currentSceneNum-2);
+					quote = quote.substring(1);
+					drawString(getGraphics(), quote, 10, 150); //TODO: was 80 150
 				}
 				
 				System.out.println("Coins: " + mainPlayer.getCoins());
+			}	
+			else if(gotAnswer){
+				changeScene(mainPlayer);
+				dialogueType = 2;
+				gotAnswer = false;
 			}
+		
+			
+			
 			
 			// Click through the outro dialogue, will change the scene
-			//else if (dialogueType == 3){
+		//	else if (dialogueType == 3){
 				// After clicking through conclusion dialogue, the scene will be changed which will automatically set dialogue type to 1
-			//	
+			//	dialogueType = 1; 
+				//changeScene(mainPlayer);
+			//	repaint();
 			//}
 		}
 
@@ -334,7 +396,7 @@ public class GameGUI extends JPanel{
 		@Override
 		public void mousePressed(MouseEvent arg0) {}
 		@Override
-		public void mouseReleased(MouseEvent arg0) {}
+		public void mouseClicked(MouseEvent arg0) {}
 	}
 	
 
@@ -388,47 +450,86 @@ public class GameGUI extends JPanel{
 	public void draw(Graphics g) {
 		boolean foundAnswer = false; 
 		ArrayList options = new ArrayList<Fraction>();
-		if (scenes.get(currentSceneNum).sceneType == SceneType.STORY) {
+		if (scenes.get(currentSceneNum).sceneType == SceneType.STORY && currentSceneNum > 1 ) {
 			options = generate(scenes.get(currentSceneNum).getDifficulty()); // Make sure to change according to scene 
 
-			Random randy = new Random();
-			int random = randy.nextInt(3);
-			if (random == 0 && foundAnswer == false) {
-				position = 1;
-				foundAnswer = true;
+			if(!gotAnswer){
+				Random randy = new Random();
+				int random = randy.nextInt(3);
+				if (random == 0 && foundAnswer == false) {
+					position = 1;
+					foundAnswer = true;
+				}
+				drawString(g, options.get(random).toString(), 650, 510);
+				options.remove(random);
+				random = randy.nextInt(2);
+				if (random == 0 && foundAnswer == false) {
+					position = 0;
+					foundAnswer = true;
+				}
+				drawString(g, options.get(random).toString(), 300, 510);
+				options.remove(random);
+				random = randy.nextInt(1);
+				if (random == 0 && foundAnswer == false) {
+					position = 2;
+					foundAnswer = true;
+				}
+				
+				// Draw the options over the buttons and the question
+				
+				drawString(g, options.get(random).toString() , 985, 510);
+				
+				drawString(g, introDialog.get(currentSceneNum-2).substring(1), 10, 10); //TODO: BLAH FBJWK comment out or delete to undo intro dialog
+				
+				String[] str =questionDialog.get(currentSceneNum-2).split("@"); 
+				String quote = "";
+				
+				
+				if (currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4 || currentSceneNum == 5)
+				{
+					quote  = str[0] + q.getNumerator()+ str[1] + q.getDenominator() + str[2];
+					quote = quote.substring(1);
+					//drawString(g, quote , 200, 400);
+				}
+				else if (currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8 || currentSceneNum == 9)
+				{
+					quote  = str[0] + q.toString()+ str[1] + additionFraction.toString() + str[2];
+					quote = quote.substring(1);
+					//drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + additionFraction.toString() + "What fraction are blue?"  , 400, 400);
+				}
+				else if (currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12 || currentSceneNum == 13)
+				{
+					quote  = str[0] + q.toString() + str[1] + currentQuestion.getQuestionFraction() + str[2];
+					quote = quote.substring(1);
+					//drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + currentQuestion.getQuestionFraction() + "What fraction are blue?"  , 400, 400);
+				}
+				drawString(g, quote , 80, 400);
 			}
-			drawString(g, options.get(random).toString(), 650, 510);
-			options.remove(random);
-			random = randy.nextInt(2);
-			if (random == 0 && foundAnswer == false) {
-				position = 0;
-				foundAnswer = true;
+			else{
+				String[] str = solvedDialog.get(currentSceneNum-2).split("@"); 
+				//currentQuestion.setCoins(100);
+				String quote = str[0] + tempCoins + str[1];
+				
+				drawString(g, quote.substring(1), 80, 400);
 			}
-			drawString(g, options.get(random).toString(), 300, 510);
-			options.remove(random);
-			random = randy.nextInt(1);
-			if (random == 0 && foundAnswer == false) {
-				position = 2;
-				foundAnswer = true;
-			}
+		}
+		
+		// display intro text
+		if(scenes.get(currentSceneNum).sceneType == SceneType.INTRO){
+			drawString(g, titleDialog.get(0).substring(1)+ "&" +titleDialog.get(1).substring(1), 80, 80);
+		}
+		// display ending text based on amount of coins
+		else if(scenes.get(currentSceneNum).sceneType == SceneType.ENDING){
+			String[] str = titleDialog.get(2).substring(1).split("@");
 			
-			// Draw the options over the buttons
-			drawString(g, options.get(random).toString() , 985, 510);
+			if (mainPlayer.getCoins() >= 0 && mainPlayer.getCoins() < 80)
+				drawString(g, str[0] + mainPlayer.getCoins() + str[1] + "&" +titleDialog.get(3).substring(1), 80, 80);
+			else if (mainPlayer.getCoins() >= 80 && mainPlayer.getCoins() < 160)
+				drawString(g, str[0] + mainPlayer.getCoins() + str[1] + "&" +titleDialog.get(4).substring(1), 80, 80);
+			else if (mainPlayer.getCoins() >= 160 && mainPlayer.getCoins() <= 240)
+				drawString(g, str[0] + mainPlayer.getCoins() + str[1] + "&" +titleDialog.get(5).substring(1), 80, 80);
 		}
-		
-		
-		if (currentSceneNum == 2 || currentSceneNum == 3 || currentSceneNum == 4 || currentSceneNum == 5)
-		{
-			drawString(g, " Test: If I have " + q.getNumerator() + " seashells that\nare blue out of "  + q.getDenominator() + "What fraction are blue?"  , 400, 400);
-		}
-		else if (currentSceneNum == 6 || currentSceneNum == 7 || currentSceneNum == 8 || currentSceneNum == 9)
-		{
-			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + additionFraction.toString() + "What fraction are blue?"  , 400, 400);
-		}
-		else if (currentSceneNum == 10 || currentSceneNum == 11 || currentSceneNum == 12 || currentSceneNum == 13)
-		{
-			drawString(g, " Test: If I have " + q.toString() + " seashells that\nare blue out of "  + currentQuestion.getQuestionFraction() + "What fraction are blue?"  , 400, 400);
-		}
+
 
 		
 		// Draw the coins in the coin box
@@ -438,8 +539,8 @@ public class GameGUI extends JPanel{
 	
 	// function to allow newlines to be used in a drawString function that also adds a border to the text
 	private void drawString(Graphics g, String text, int x, int y){
-		for (String line : text.split("\n")){
-			g.setColor(new Color(100, 100, 50));
+		for (String line : text.split("&")){
+			g.setColor(new Color(50, 50, 0));
 			g.drawString(line, x - 1, y += g.getFontMetrics().getHeight() - 1);
 			g.drawString(line, x - 1, y + 1);
 			g.drawString(line, x + 1, y - 1);
@@ -463,7 +564,7 @@ public class GameGUI extends JPanel{
 	
 	
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Image Play");
+		JFrame frame = new JFrame("Squiggly's Fraction Adventures");
 		GameGUI panel = new GameGUI();
 		frame.add(panel, BorderLayout.CENTER);
 		frame.setSize(1280, 720);
