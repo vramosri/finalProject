@@ -295,6 +295,7 @@ public class GameGUI extends JPanel{
 				changeScene(mainPlayer);
 				dialogueType = 2;
 				repaint(); 
+
 			}
 			
 			// Click through dialogue
@@ -312,8 +313,7 @@ public class GameGUI extends JPanel{
 			else if (dialogueType == 2){
 				if (e.getX() > 200 && e.getX() < (200+197) && e.getY() > 520 && e.getY() < (520+56) && position == 0)
 				{
-					mainPlayer.addCoins(currentQuestion.getCoins());
-					
+					mainPlayer.addCoins(currentQuestion.getCoins());					
 					//drawString(getGraphics(), solvedDialog.get(currentSceneNum-2).substring(1), 10, 180);
 					gotAnswer = true;
 					dialogueType = 1;
@@ -330,8 +330,9 @@ public class GameGUI extends JPanel{
 					currentQuestion.reduceCoins();
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
-					drawString(getGraphics(), quote, 10, 150); //TODO: was 80, 150
+					drawString(getGraphics(), quote, 10, 150);
 				}
+				
 				if (e.getX() > 542 && e.getX() < (542+197) && e.getY() > 520 && e.getY() < (520+56) && position == 1)
 				{
 					mainPlayer.addCoins(currentQuestion.getCoins());
@@ -349,6 +350,7 @@ public class GameGUI extends JPanel{
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
 					drawString(getGraphics(), quote, 10, 150); //TODO: WAS 80 150
+
 				}
 				if (e.getX() > 883 && e.getX() < (883+197) && e.getY() > 520 && e.getY() < (520+56) && position == 2)
 				{
@@ -367,6 +369,7 @@ public class GameGUI extends JPanel{
 					String quote = wrongDialog.get(currentSceneNum-2);
 					quote = quote.substring(1);
 					drawString(getGraphics(), quote, 10, 150); //TODO: was 80 150
+
 				}
 				
 				System.out.println("Coins: " + mainPlayer.getCoins());
