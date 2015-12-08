@@ -71,10 +71,10 @@ public class MultiplicationQuestion extends Question {
 		questionFraction = new Fraction(numerator, denominator);
 
 		correctAnswer = new Fraction(numerator*multFraction.getNumerator(),denominator*multFraction.getDenominator());
-		System.out.println(questionFraction);
-		System.out.println(multFraction);
+		//System.out.println(questionFraction);
+		//System.out.println(multFraction);
 		
-		System.out.println(correctAnswer);
+		//System.out.println(correctAnswer);
 		return multFraction;
 		
 	}
