@@ -111,6 +111,8 @@ public class MatchingQuestion extends Question {
 
 	public Fraction generateOption(int difficulty)
 	{
+		//Generate option generates an incorrect answer, choosing randomly from the options below.
+		//Each option should be incorrect regardless of the question fraction, as shown in the JUnit test.
 		int num;
 		int den;
 	

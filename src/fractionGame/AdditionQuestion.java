@@ -21,6 +21,7 @@ public class AdditionQuestion extends Question {
 		int anumerator = 0;
 		int adenominator = 0;
 		Random r = new Random();
+		//This function behaves essentially the same as in MatchingQuestion, but generates another fraction along with the questionFraction.
 		switch(difficulty){
 		case 1:
 			while ((denominator == 0) || (denominator % 2 == 1)) {
