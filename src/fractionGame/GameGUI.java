@@ -16,6 +16,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +27,10 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -56,8 +64,9 @@ public class GameGUI extends JPanel{
 	Cursor inactiveCursor;
 	Cursor activeCursor;
 	private Fraction additionFraction; 
-	int currentSceneNum;
+	Integer currentSceneNum;
 	int dialogueType;
+	private final String saveFile = "src/saveFile.txt";
 
 	int position = -1; 
 	
@@ -138,6 +147,17 @@ public class GameGUI extends JPanel{
 	}
 	
 	public void changeScene(Player mainPlayer){
+		try {
+			OutputStream out = new FileOutputStream(saveFile);
+			PrintWriter print = new PrintWriter(out);
+			print.println(currentSceneNum);
+			print.println(mainPlayer.getCoins());
+			print.println(dialogueType);
+			print.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		clip.stop();
 		clip.close();
 		this.playSound(scenes.get(currentSceneNum).getMusicFile());
@@ -165,7 +185,47 @@ public class GameGUI extends JPanel{
 		repaint();
 	}
 	
+	public void changeScene(Player mainPlayer, int scene, int coins, int dialogue){
+		currentSceneNum = scene;
+		mainPlayer.setCoins(coins);
+		dialogueType = dialogue;
+		try {
+			OutputStream out = new FileOutputStream(saveFile);
+			PrintWriter print = new PrintWriter(out);
+			print.println(currentSceneNum);
+			print.println(mainPlayer.getCoins());
+			print.println(dialogueType);
+			print.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		clip.stop();
+		clip.close();
+		this.playSound(scenes.get(currentSceneNum).getMusicFile());
+		mainPlayer.setProgress(scenes.get(currentSceneNum).getSceneNum());
+		
+		if (currentSceneNum == scenes.size()-1){
+			currentSceneNum = 0;
+			dialogueType = 0;
+		}
+		else
+			currentSceneNum++;
+		
+		//testing
+		if (currentSceneNum == 2)
+			dialogueType = 2;
+		
+		if (scenes.get(currentSceneNum).sceneType == SceneType.ENDING)
+			dialogueType = 1;
+		//testing
+		
+		// when scene changes, the dialogue type will be set to 1
 
+		
+		
+		repaint();
+	}
 	
 	public void paintComponent(Graphics g){
 		// draw the current scene
@@ -211,7 +271,28 @@ public class GameGUI extends JPanel{
 				}
 				// Continue button, will read from a text file and set scene and coins based on information read
 				if (e.getX() > 446 && e.getX() < 837 && e.getY() > (543 - 80) && e.getY() < (596 - 80)) {
-					changeScene(mainPlayer);
+					InputStream is = null;
+					try {
+						is = new FileInputStream(saveFile);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+					String info = s.hasNext() ? s.next() : "";
+					int index = info.indexOf("\n");
+					int scene = Integer.parseInt(info.substring(0, index - 1));
+					info = info.substring(index + 1);
+					index = info.indexOf("\n");
+					int coins = Integer.parseInt(info.substring(0, index - 1));
+					int dialogue = Integer.parseInt(info.substring(index + 1, index + 2));
+					if(scene == 0){
+						changeScene(mainPlayer);
+						dialogueType = 1;
+					}
+					else{
+						changeScene(mainPlayer, scene, coins, dialogue);
+					}
 				}
 			}
 			
