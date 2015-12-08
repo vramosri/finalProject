@@ -191,10 +191,6 @@ public class MatchingQuestion extends Question {
 			}
 		}
 		
-		//System.out.println(random);
-		//System.out.println("Question: " + questionFraction.getNumerator() + "/" + questionFraction.getDenominator());
-		//System.out.println("Answer: " + correctAnswer.getNumerator() + "/" + correctAnswer.getDenominator());
-		//System.out.println("Option: " + num + "/" + den);
 		return new Fraction(num, den); 		
 		
 	}
