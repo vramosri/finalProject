@@ -22,6 +22,7 @@ public class MultiplicationQuestion extends Question {
 		Random r = new Random();
 		
 		switch(difficulty){
+		//When the difficulty is one, a random fraction * a form of one will be generated
 		case 1:
 			int randMult = r.nextInt(3)+1;
 			multFraction.setNumerator(randMult);
@@ -32,6 +33,7 @@ public class MultiplicationQuestion extends Question {
 			while(numerator <= 0)
 				numerator = r.nextInt(denominator);
 			break;
+		//When the difficulty is two, a random fraction * a form of a multiplier will be generated
 		case 2:
 			while(denominator <= 1)
 				denominator = r.nextInt(5);
@@ -43,6 +45,7 @@ public class MultiplicationQuestion extends Question {
 			
 				multFraction.setNumerator(multFraction.getDenominator()*(r.nextInt(3)+1));
 			break;
+		//When the difficulty is three, two random fraction will be generated
 		case 3:
 			while(denominator <= 2)
 				denominator = r.nextInt(5);
@@ -54,6 +57,7 @@ public class MultiplicationQuestion extends Question {
 			while(multFraction.getNumerator() <= 0)
 				multFraction.setNumerator(r.nextInt(multFraction.getDenominator()));
 			break;
+		//Same as difficulty three, just larger numbers
 		case 4:
 			while(denominator <= 3)
 				denominator = r.nextInt(7);
@@ -69,16 +73,15 @@ public class MultiplicationQuestion extends Question {
 			break;
 		}
 		questionFraction = new Fraction(numerator, denominator);
-
-		correctAnswer = new Fraction(numerator*multFraction.getNumerator(),denominator*multFraction.getDenominator());
-		//System.out.println(questionFraction);
-		//System.out.println(multFraction);
 		
-		//System.out.println(correctAnswer);
+		//The correct answer is the product of the two generated numbers
+		correctAnswer = new Fraction(numerator*multFraction.getNumerator(),denominator*multFraction.getDenominator());
+		
 		return multFraction;
 		
 	}
 	public Fraction generateAnswer(int difficulty) {
+		//Just returns answer as its generated in the question generation.
 		return correctAnswer; 
 	}
 
@@ -94,6 +97,7 @@ public class MultiplicationQuestion extends Question {
 
 	@Override
 	public Fraction generateOption(int difficulty) {
+		//Does the same thing as generateQuestion, generating two random fractions and returning that fraction
 		int numerator = 0;
 		int denominator = 0;
 		int numerator2 = 0;
@@ -149,18 +153,13 @@ public class MultiplicationQuestion extends Question {
 		}
 		
 		Fraction tFrac = new Fraction(numerator*numerator2, denominator*denominator2);
+		
+		//Check that the returned option is not the same as the answer
 		if(tFrac.checkEquals(correctAnswer)){
 			tFrac = generateOption( difficulty);
 		}
 		
-		//System.out.println(tFrac);
 		return tFrac;
-	}
-	
-	public static void main(String[] args){
-		MultiplicationQuestion  t = new MultiplicationQuestion();
-		t.generateQuestion(4);
-		t.generateOption(4);
 	}
 
 }
