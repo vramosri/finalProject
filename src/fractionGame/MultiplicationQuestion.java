@@ -153,7 +153,7 @@ public class MultiplicationQuestion extends Question {
 			tFrac = generateOption( difficulty);
 		}
 		
-		System.out.println(tFrac);
+		//System.out.println(tFrac);
 		return tFrac;
 	}
 	

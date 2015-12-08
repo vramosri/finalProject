@@ -341,8 +341,13 @@ public class GameGUI extends JPanel{
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				main(null);
-				System.exit(0);
+				
+				mainPlayer = new Player();
+				//scenes = new ArrayList<Scene>();
+				currentSceneNum = 0;
+				dialogueType = 0;
+				gotAnswer = false;
+				tempCoins = 0;
 			}
 		
 			// Title screen buttons
